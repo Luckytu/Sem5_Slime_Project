@@ -1,0 +1,87 @@
+#define PI 3.14159
+
+float time;
+float deltaTime;
+
+int width;
+int height;
+RWTexture2D<float4> ColorMap;
+
+struct Agent{
+    float2 position;
+    float angle;
+    bool alive;
+};
+
+float moveSpeed;
+
+RWStructuredBuffer<Agent> agents;
+uint agentsAmount;
+
+float decayRate;
+
+//returns semi random numbers in the range 0.0...1.0
+// Quelle: www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
+float hashNormalized(uint seed)
+{
+    seed ^= 2747636419u;
+    seed *= 2654435769u;
+    seed ^= seed >> 16;
+    seed *= 2654435769u;
+    seed ^= seed >> 16;
+    seed *= 2654435769u;
+    return (float)seed / 4294967295.0;
+}
+
+#pragma kernel UpdateAgents
+
+[numthreads(16,1,1)]
+void UpdateAgents(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= agentsAmount)
+    {
+        return;
+    }
+    
+    Agent agent = agents[id.x];
+    
+    float2 originPos = agent.position;
+    
+    float2 direction = float2(cos(agent.angle), sin(agent.angle));
+    float2 newPos = agent.position + direction * moveSpeed * deltaTime;
+    
+    if (newPos.x < 0 || newPos.x >= width || newPos.y < 0 || newPos.y >= height)
+    {
+        float reverseAngle = agent.angle - PI;
+        if (reverseAngle < 0.0)
+        {
+            reverseAngle = 2 * PI + reverseAngle;
+        }
+        
+        agents[id.x].angle = reverseAngle;
+        
+        newPos.x = min(width - 1, max(0, newPos.x));
+        newPos.y = min(height - 1, max(0, newPos.y));
+    }
+    
+    agents[id.x].position = newPos;
+    
+}
+
+#pragma kernel UpdateColorMap
+
+[numthreads(8,8,1)]
+void UpdateColorMap (uint3 id : SV_DispatchThreadID)
+{   
+    //not strictly necessary, safety measure
+    if (id.x < 0 || id.x >= (uint) width || id.y < 0 || id.y >= (uint) height)
+    {
+        return;
+    }
+    
+    float rdm = hashNormalized(id.x * id.y);
+
+    float r = (float)id.x / (float)width;
+    float g = (float)id.y / (float)height;
+    ColorMap[id.xy] = float4(rdm, rdm, rdm, 1.0);
+}
