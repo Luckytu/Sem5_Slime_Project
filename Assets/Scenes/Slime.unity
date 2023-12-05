@@ -157,12 +157,12 @@ MonoBehaviour:
   simulationShader: {fileID: 7200000, guid: 9f021b9228fd4e54caaadcfcd3e7c0df, type: 3}
   filterMode: 0
   format: 48
-  width: 1920
-  height: 1080
-  agentsAmount: 20000
+  width: 384
+  height: 216
+  agentsAmount: 200
   decayRate: 0.34
-  moveSpeed: 1.37
-  turnSpeed: 0.27
+  moveSpeed: 3.33
+  turnSpeed: 0.18
   possibleSpeciesGradient:
     serializedVersion: 2
     key0: {r: 0.8666667, g: 0.77514046, b: 0.15294117, a: 1}

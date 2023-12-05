@@ -83,12 +83,15 @@ float sense(Agent agent, float sensorAngleRelative)
     int2 sensorPosition = (int2) (agent.position + sensorVector * speciesSettings[agent.species].sensorOffset);
     
     float agentHue = convertToH(speciesSettings[agent.species].color);
-    float sampleHue = convertToH(diffuseMap[sensorPosition]);
+    float4 sample = diffuseMap[sensorPosition];
+    float sampleHue = convertToH(sample);
+    float diff = abs(sampleHue - agentHue);
+    
+    float value = max(sample.r, max(sample.g, sample.b));
     
     //calculates the difference between the agents hue and the sample hue and smoothly maps it to [-1;1]
     //this results in larger differences pushing each other away while similar values attract each other
-    float diff = abs(sampleHue - agentHue);
-    return 8 * pow(diff, 2) - 8 * diff + 1;
+    return 8 * pow(diff, 2) - 8 * diff + 1 + value / 2;
 }
 
 [numthreads(16,1,1)]
@@ -119,15 +122,15 @@ void UpdateAgents(uint3 id : SV_DispatchThreadID)
     {
         agents[id.x].angle += (random - 0.5) * 2 * turnSpeed * deltaTime;
     }
-	// Turn right
-    else if (weightRight > weightLeft)
-    {
-        agents[id.x].angle -= random * turnSpeed * deltaTime;
-    }
 	// Turn left
     else if (weightLeft > weightRight)
     {
         agents[id.x].angle += random * turnSpeed * deltaTime;
+    }
+	// Turn right
+    else if (weightRight > weightLeft)
+    {
+        agents[id.x].angle -= random * turnSpeed * deltaTime;
     }
     
     float2 directionVector = float2(cos(agent.angle), sin(agent.angle));

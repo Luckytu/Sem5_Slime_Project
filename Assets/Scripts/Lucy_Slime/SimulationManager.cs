@@ -66,7 +66,7 @@ public class SimulationManager : MonoBehaviour
         createRenderTexture(ref trailMap, width, height, filterMode, format);
         createRenderTexture(ref diffuseMap, width, height, filterMode, format);
 
-        transform.GetComponentInChildren<MeshRenderer>().material.mainTexture = trailMap;
+        transform.GetComponentInChildren<MeshRenderer>().material.mainTexture = diffuseMap;
 
         setupSpecies();
         spawnAgents();
