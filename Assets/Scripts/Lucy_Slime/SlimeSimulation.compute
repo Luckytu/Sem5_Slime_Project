@@ -5,15 +5,27 @@ float deltaTime;
 
 int width;
 int height;
-RWTexture2D<float4> ColorMap;
+RWTexture2D<float4> trailMap;
+RWTexture2D<float4> diffuseMap;
 
-struct Agent{
-    float2 position;
-    float angle;
-    bool alive;
+struct SpeciesSettings
+{
+    float moveSpeed;
+    float turnSpeed;
+    float4 color;
+    
+    float sensorAngle;
+    float sensorOffset;
 };
 
-float moveSpeed;
+RWStructuredBuffer<SpeciesSettings> speciesSettings;
+
+struct Agent{
+    int species;
+    
+    float2 position;
+    float angle;
+};
 
 RWStructuredBuffer<Agent> agents;
 uint agentsAmount;
@@ -35,6 +47,50 @@ float hashNormalized(uint seed)
 
 #pragma kernel UpdateAgents
 
+//converts an RGB color to the H value of the correspoding HSV color
+float convertToH(float4 rgb)
+{
+    float cmax = max(rgb.r, max(rgb.g, rgb.b));
+    float cmin = min(rgb.r, min(rgb.g, rgb.b));
+    
+    float delta = cmax - cmin;
+    
+    if (delta == 0.0)
+    {
+        return 0.0;
+    }
+    else if (rgb.r == cmax)
+    {
+        return ((((rgb.r - rgb.b) / delta) + 6) % 6) / 6;
+    }
+    else if (rgb.g == cmax)
+    {
+        return (((rgb.b - rgb.r) / delta) + 2) / 6;
+    }
+    else if (rgb.b == cmax)
+    {
+        return (((rgb.r - rgb.g) / delta) + 4) / 6;
+    }
+    
+    return 0.0;
+}
+
+float sense(Agent agent, float sensorAngleRelative)
+{
+    float sensorAngleWorld = agent.angle + sensorAngleRelative;
+    float2 sensorVector = float2(cos(sensorAngleRelative), sin(sensorAngleRelative));
+    
+    int2 sensorPosition = (int2) (agent.position + sensorVector * speciesSettings[agent.species].sensorOffset);
+    
+    float agentHue = convertToH(speciesSettings[agent.species].color);
+    float sampleHue = convertToH(diffuseMap[sensorPosition]);
+    
+    //calculates the difference between the agents hue and the sample hue and smoothly maps it to [-1;1]
+    //this results in larger differences pushing each other away while similar values attract each other
+    float diff = abs(sampleHue - agentHue);
+    return 8 * pow(diff, 2) - 8 * diff + 1;
+}
+
 [numthreads(16,1,1)]
 void UpdateAgents(uint3 id : SV_DispatchThreadID)
 {
@@ -44,11 +100,38 @@ void UpdateAgents(uint3 id : SV_DispatchThreadID)
     }
     
     Agent agent = agents[id.x];
+    SpeciesSettings settings = speciesSettings[agent.species];
     
-    float2 originPos = agent.position;
+    float random = hashNormalized(agent.position.x + agent.position.y * width + id.x + time * 100000);
     
-    float2 direction = float2(cos(agent.angle), sin(agent.angle));
-    float2 newPos = agent.position + direction * moveSpeed * deltaTime;
+    float weightForward = sense(agent, 0);
+    float weightLeft = sense(agent, settings.sensorAngle);
+    float weightRight = sense(agent, -settings.sensorAngle);
+    
+    float turnSpeed = settings.turnSpeed * 2 * PI;
+    
+    // Continue in same direction
+    if (weightForward > weightLeft && weightForward > weightRight)
+    {
+        agents[id.x].angle += 0;
+    }
+    else if (weightForward < weightLeft && weightForward < weightRight)
+    {
+        agents[id.x].angle += (random - 0.5) * 2 * turnSpeed * deltaTime;
+    }
+	// Turn right
+    else if (weightRight > weightLeft)
+    {
+        agents[id.x].angle -= random * turnSpeed * deltaTime;
+    }
+	// Turn left
+    else if (weightLeft > weightRight)
+    {
+        agents[id.x].angle += random * turnSpeed * deltaTime;
+    }
+    
+    float2 directionVector = float2(cos(agent.angle), sin(agent.angle));
+    float2 newPos = agent.position + directionVector * settings.moveSpeed * deltaTime;
     
     if (newPos.x < 0 || newPos.x >= width || newPos.y < 0 || newPos.y >= height)
     {
@@ -66,12 +149,14 @@ void UpdateAgents(uint3 id : SV_DispatchThreadID)
     
     agents[id.x].position = newPos;
     
+    trailMap[(int2) newPos] = settings.color;
 }
 
-#pragma kernel UpdateColorMap
+
+#pragma kernel UpdatecolorMap
 
 [numthreads(8,8,1)]
-void UpdateColorMap (uint3 id : SV_DispatchThreadID)
+void UpdatecolorMap (uint3 id : SV_DispatchThreadID)
 {   
     //not strictly necessary, safety measure
     if (id.x < 0 || id.x >= (uint) width || id.y < 0 || id.y >= (uint) height)
@@ -79,9 +164,21 @@ void UpdateColorMap (uint3 id : SV_DispatchThreadID)
         return;
     }
     
-    float rdm = hashNormalized(id.x * id.y);
-
-    float r = (float)id.x / (float)width;
-    float g = (float)id.y / (float)height;
-    ColorMap[id.xy] = float4(rdm, rdm, rdm, 1.0);
+    float4 originalColor = diffuseMap[id.xy];
+    
+    // 3x3 blur
+    float4 blurredColor = 0;
+    for (int offsetX = -1; offsetX <= 1; offsetX++)
+    {
+        for (int offsetY = -1; offsetY <= 1; offsetY++)
+        {
+            int sampleX = min(width - 1, max(0, id.x + offsetX));
+            int sampleY = min(height - 1, max(0, id.y + offsetY));
+            blurredColor += trailMap[int2(sampleX, sampleY)];
+        }
+    }
+    blurredColor = blurredColor / 9;
+    
+    diffuseMap[id.xy] = max(0, blurredColor - decayRate * deltaTime);
+    trailMap[id.xy] = max(0, trailMap[id.xy] - decayRate * deltaTime);
 }

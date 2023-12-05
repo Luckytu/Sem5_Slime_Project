@@ -130,6 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 215778646}
   - component: {fileID: 215778645}
+  - component: {fileID: 215778647}
   m_Layer: 0
   m_Name: Lucy_Slime
   m_TagString: Untagged
@@ -150,11 +151,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayTexture: {fileID: 0}
+  trailMap: {fileID: 0}
+  diffuseMap: {fileID: 0}
+  foodMap: {fileID: 0}
   simulationShader: {fileID: 7200000, guid: 9f021b9228fd4e54caaadcfcd3e7c0df, type: 3}
   filterMode: 0
   format: 48
-  width: 192
-  height: 108
+  width: 1920
+  height: 1080
+  agentsAmount: 20000
+  decayRate: 0.34
+  moveSpeed: 1.37
+  turnSpeed: 0.27
+  possibleSpeciesGradient:
+    serializedVersion: 2
+    key0: {r: 0.8666667, g: 0.77514046, b: 0.15294117, a: 1}
+    key1: {r: 0.8666667, g: 0.38564897, b: 0.07843137, a: 1}
+    key2: {r: 0.8666667, g: 0.07843137, b: 0.30823284, a: 0}
+    key3: {r: 0.83967465, g: 0.07843137, b: 0.8666667, a: 0}
+    key4: {r: 0.56708795, g: 0.07843137, b: 0.8666667, a: 0}
+    key5: {r: 0.32254902, g: 0.14117646, b: 0.8666667, a: 0}
+    key6: {r: 0.07843137, g: 0.32977414, b: 0.8666667, a: 0}
+    key7: {r: 0.07843137, g: 0.8666667, b: 0.6137808, a: 0}
+    ctime0: 0
+    ctime1: 7132
+    ctime2: 15035
+    ctime3: 21781
+    ctime4: 29684
+    ctime5: 39899
+    ctime6: 51464
+    ctime7: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 8
+    m_NumAlphaKeys: 2
+  speciesAmount: 3
+  sensorAngle: 0.82
+  sensorOffset: 2.35
 --- !u!4 &215778646
 Transform:
   m_ObjectHideFlags: 0
@@ -171,6 +212,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &215778647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215778644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4cb5124480314345a6e73848674b43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.46226418, g: 0.29630938, b: 0.29436633, a: 1}
+  hue: 0
+  hueScaled: 0
+  r: 0
+  g: 0
+  b: 0
+  cmax: 0
+  cmin: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
