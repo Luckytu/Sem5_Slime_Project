@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=48b06a5911ee8684487e47e8f3aeb238&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Assets/UI/Style/PauseMenuStyle.uss?fileID=7433441132597879392&amp;guid=045ad561d68cf564897413d082dcd3b4&amp;type=3#PauseMenuStyle" />
+    <ui:VisualElement name="PauseMenuContainer" class="UIContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="PauseMenu" class="PauseMenu">
+            <ui:Label tabindex="-1" text="[ pause ]" display-tooltip-when-elided="true" name="PauseLabel" class="PauseLabel" />
+            <ui:VisualElement name="PauseButtonContainer" class="PauseButtonContainer">
+                <ui:Button text="&lt; Back" display-tooltip-when-elided="true" name="BackButton" class="Button" />
+                <ui:VisualElement name="Seperator" class="Seperator" />
+                <ui:Button text="Simulation Settings" display-tooltip-when-elided="true" name="SimulationSettingsButton" class="Button" />
+                <ui:VisualElement name="Seperator" class="Seperator" />
+                <ui:Button text="Camera Settings" display-tooltip-when-elided="true" name="CameraSettingsButton" class="Button" />
+                <ui:VisualElement name="Seperator" class="Seperator" />
+                <ui:Button text="Quit &gt;" display-tooltip-when-elided="true" name="QuitGameButton" class="Button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

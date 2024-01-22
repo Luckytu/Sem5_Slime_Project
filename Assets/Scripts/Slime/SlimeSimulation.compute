@@ -1,0 +1,328 @@
+int width;
+int height;
+
+float deltaTime;
+float time;
+
+float decayRate;
+float diffuseRatio;
+float agentContributionRatio;
+float randomVariance;
+float randomDeath;
+
+float4 backgroundColor;
+
+struct Agent
+{
+    int speciesIndex;
+    
+    float2 position;
+    float angle;
+    
+    float hunger;
+};
+
+struct Species
+{
+    float4 color;
+    
+    float2 spawnPosition;
+    
+    float moveSpeed;
+    float turnSpeed;
+    
+    float sensorAngle;
+    float sensorOffset;
+};
+
+StructuredBuffer<Species> species;
+uint speciesAmount;
+
+RWStructuredBuffer<Agent> agents;
+uint agentAmount;
+
+//Simulation Maps
+RWTexture2D<float4> foodMap;
+RWTexture2D<float4> preTrailMap;
+RWTexture2D<float4> diffusedTrailMap;
+
+//Display
+RWTexture2D<float4> displayMap;
+
+//Debug
+RWTexture2D<float4> debugMap;
+
+// DEBUG //
+
+float globalSpeed;
+float globalTurnSpeed;
+float globalSensorAngle;
+float globalSensorOffset;
+
+// END DEBUG //
+
+// Quelle: www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
+uint hash(uint seed)
+{
+    seed ^= 2747636419u;
+    seed *= 2654435769u;
+    seed ^= seed >> 16;
+    seed *= 2654435769u;
+    seed ^= seed >> 16;
+    seed *= 2654435769u;
+    return seed;
+}
+
+float hash01(uint seed)
+{
+    return hash(seed) / 4294967295.0;
+}
+
+//converts an RGB color to the H value of the correspoding HSV color
+float convertToH(float4 rgb)
+{
+    float cmax = max(rgb.r, max(rgb.g, rgb.b));
+    float cmin = min(rgb.r, min(rgb.g, rgb.b));
+    
+    float delta = cmax - cmin;
+    
+    if (delta == 0.0)
+    {
+        return 0.0;
+    }
+    else if (rgb.r == cmax)
+    {
+        return ((((rgb.r - rgb.b) / delta) + 6) % 6) / 6;
+    }
+    else if (rgb.g == cmax)
+    {
+        return (((rgb.b - rgb.r) / delta) + 2) / 6;
+    }
+    else if (rgb.b == cmax)
+    {
+        return (((rgb.r - rgb.g) / delta) + 4) / 6;
+    }
+    
+    return 0.0;
+}
+
+void senseDebug(Agent agent, float angle, float weight)
+{   
+    float sensorAngle = agent.angle + angle;
+    float2 sensorVector = float2(cos(sensorAngle), sin(sensorAngle));
+    float2 sensorPos = agent.position + sensorVector * globalSensorOffset;
+    
+    float r = weight;
+    float b = 1.0 - r;
+    
+    debugMap[(int2) sensorPos] = float4(r, 0, b, 1);
+}
+
+float sense(Agent agent, Species agentSpecies, float angle, int id)
+{
+    float sensorAngle = agent.angle + angle;
+    float2 sensorVector = float2(cos(sensorAngle), sin(sensorAngle));
+    float2 sensorPosition = agent.position + sensorVector * globalSensorOffset;
+    
+    int2 sensorCoords = (int2) sensorPosition;
+    
+    sensorCoords.x = clamp(sensorCoords.x, 0, width);
+    sensorCoords.y = clamp(sensorCoords.y, 0, height);
+    
+    float4 sample = preTrailMap[sensorCoords];
+    
+    float agentHue = convertToH(agentSpecies.color);
+    float sampleHue = convertToH(sample);
+    float diff = abs(sampleHue - agentHue);
+    
+    //value is the V part of HSV
+    float value = max(sample.r, max(sample.g, sample.b));
+    
+    float smoothWeight = 8 * pow(diff, 2) - 8 * diff + 1;
+    
+    //agent becomes hungry if it collides with different species
+    if (value > 0.9 && smoothWeight < 0)
+    {
+        agents[id].hunger -= smoothWeight;
+    }
+    
+    //calculates the difference between the agents hue and the sample hue and smoothly maps it to [-1;1]
+    //this results in larger differences pushing each other away while similar values attract each other
+    return smoothWeight + value / 2;
+    
+    //return preTrailMap[sensorCoords].r + preTrailMap[sensorCoords].g + preTrailMap[sensorCoords].b;
+}
+
+#pragma kernel update
+
+[numthreads(16,1,1)]
+void update(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= agentAmount)
+    {
+        return;
+    }
+    
+    Agent agent = agents[id.x];
+    Species agentSpecies = species[agent.speciesIndex];
+    
+    //sense
+    float weightLeft = sense(agent, agentSpecies, globalSensorAngle, id.x);
+    float weightForward = sense(agent, agentSpecies, 0, id.x);
+    float weightRight = sense(agent, agentSpecies, -globalSensorAngle, id.x);
+    
+    senseDebug(agent, globalSensorAngle, weightLeft);
+    senseDebug(agent, 0, weightForward);
+    senseDebug(agent, -globalSensorAngle, weightRight);
+    
+    float random = hash01(agent.position.y * width + agent.position.x + hash(id.x + time * 100000));
+
+    // Continue in same direction
+    if (weightForward > weightLeft && weightForward > weightRight && random > randomVariance)
+    {
+        agents[id.x].angle += 0;
+    }
+    else if (weightForward < weightLeft && weightForward < weightRight || random <= randomVariance)
+    {
+        agents[id.x].angle += (random - 0.5) * 2 * globalTurnSpeed * deltaTime;
+    }
+	// Turn left
+    else if (weightLeft > weightRight)
+    {
+        agents[id.x].angle += random * globalTurnSpeed * deltaTime;
+    }
+	// Turn right
+    else if (weightRight > weightLeft)
+    {
+        agents[id.x].angle -= random * globalTurnSpeed * deltaTime;
+    }
+    
+    //direction in which agent moves and new position
+    float2 moveVector = float2(cos(agents[id.x].angle), sin(agents[id.x].angle));
+    float2 position = agent.position + moveVector * deltaTime * globalSpeed;
+    
+    //kill (set back to spawn) if the agent is too hungry
+    if (random * agents[id.x].hunger > randomDeath)
+    {
+        position = agentSpecies.spawnPosition;
+        agents[id.x].hunger = 0;
+    }
+    
+    //bounce off borders
+    if (position.x < 0 || position.x >= width || position.y < 0 || position.y >= height)
+    {
+        float2 wallNormal;
+        
+        if (position.x < 0)
+        {
+            wallNormal = float2(1, 0);
+        }
+        if (position.x >= width)
+        {
+            wallNormal = float2(-1, 0);
+        }
+        if (position.y < 0)
+        {
+            wallNormal = float2(0, 1);
+        }
+        if (position.y >= height)
+        {
+            wallNormal = float2(0, -1);
+        }
+        
+        float2 reflectionVector = moveVector - 2 * dot(moveVector, wallNormal) * wallNormal;
+        agents[id.x].angle = atan2(reflectionVector.y, reflectionVector.x);
+        
+        position.x = clamp(position.x, 0, width);
+        position.y = clamp(position.y, 0, height);
+    }
+    else
+    {
+        int2 coords = (int2) position;
+        float4 oldMap = preTrailMap[coords];
+        preTrailMap[coords] = min(agentSpecies.color, oldMap + agentSpecies.color * agentContributionRatio * deltaTime);
+    }
+    
+    agents[id.x].position = position;
+}
+
+#pragma kernel diffuse
+
+[numthreads(8,8,1)]
+void diffuse (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x < 0 || id.x >= (uint) width || id.y < 0 || id.y >= (uint) height)
+    {
+        return;
+    }
+    
+    float4 color = preTrailMap[id.xy];
+    float4 sum = 0;
+    
+    for (int x = -1; x <= 1; x++)
+    {
+        for (int y = -1; y <= 1; y++)
+        {
+            int sampleX = clamp(id.x + x, 0, width);
+            int sampleY = clamp(id.y + y, 0, height);
+            
+            sum += preTrailMap[int2(sampleX, sampleY)];
+        }
+    }
+    
+    float4 blurredColor = sum / 9;
+    float diffuseWeight = saturate(diffuseRatio * deltaTime);
+    blurredColor = color * (1 - diffuseWeight) + blurredColor * diffuseWeight;
+    
+    diffusedTrailMap[id.xy] = max(0, blurredColor - decayRate * deltaTime);
+}
+
+#pragma kernel display
+
+[numthreads(8, 8, 1)]
+void display(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x < 0 || id.x >= (uint) width || id.y < 0 || id.y >= (uint) height)
+    {
+        return;
+    }
+    
+    //background color
+    /*
+    float alpha = diffusedTrailMap[id.xy].a;
+    float3 color = diffusedTrailMap[id.xy].rgb * alpha + backgroundColor.rgb * (1 - alpha);    
+
+    displayMap[id.xy] = float4(color, 1);
+    */
+    
+    //invert color
+    //displayMap[id.xy] = 1 - diffusedTrailMap[id.xy];
+    
+    float foodAlpha = foodMap[id.xy].a;
+    float4 color = foodMap[id.xy] + (1 - diffusedTrailMap[id.xy]) * (1 - foodAlpha);
+    
+    displayMap[id.xy] = color;
+    
+    //displayMap[id.xy] = foodMap[id.xy];
+}
+
+#pragma kernel debug
+
+[numthreads(8,8,1)]
+void debug(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x < 0 || id.x >= (uint) width || id.y < 0 || id.y >= (uint) height)
+    {
+        return;
+    }
+    
+    float4 color = debugMap[id.xy];
+    color -= 0.01;
+    
+    debugMap[id.xy] = max(0, color);
+    
+    if (debugMap[id.xy].r + debugMap[id.xy].g + debugMap[id.xy].b < 0.9)
+    {
+        debugMap[id.xy] = float4(0, 0, 0, 0);
+    }
+}

@@ -1,0 +1,65 @@
+.CameraImagesContainer {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.CameraImages {
+    --unity-image: url('project://database/Assets/Graphics/Materials/test.png?fileID=2800000&guid=3342f6a041cdb9e40a6a1c6d9b9876d2&type=3#test');
+    --unity-image-size: scale-to-fit;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.ProjectionControlPoint {
+    -unity-text-align: middle-center;
+    position: absolute;
+    top: 342px;
+    left: 367px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    bottom: auto;
+    right: auto;
+    font-size: 43px;
+    -unity-font-style: normal;
+    -unity-font-definition: url('project://database/Assets/Fonts/zector.regular.ttf?fileID=12800000&guid=b7c692aa53e15614f9e8b85374b7c210&type=3#zector.regular');
+    color: rgb(214, 25, 61);
+}
+
+.CameraButtonContainer {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

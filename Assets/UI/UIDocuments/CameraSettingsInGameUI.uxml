@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=48b06a5911ee8684487e47e8f3aeb238&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Assets/UI/Style/CameraSettingsInGameUIStyle.uss?fileID=7433441132597879392&amp;guid=800a9f3099b44834c9d724040a15beee&amp;type=3#CameraSettingsInGameUIStyle" />
+    <ui:VisualElement name="CameraSettingsContainer" class="UIContainer BaseText" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="p1" class="ValuePairContainer">
+            <ui:Label tabindex="-1" text="(0.00, 0.00)" display-tooltip-when-elided="true" name="p1Label" class="ValuePairLabel" />
+            <ui:Slider label="x1" value="0" high-value="1" direction="Horizontal" name="x1" page-size="1" />
+            <ui:VisualElement class="Seperator" />
+            <ui:Slider label="y1" value="0" high-value="1" direction="Horizontal" name="y1" page-size="1" />
+        </ui:VisualElement>
+        <ui:VisualElement name="p2" class="ValuePairContainer">
+            <ui:Label tabindex="-1" text="(1.00, 0.00)" display-tooltip-when-elided="true" name="p2Label" class="ValuePairLabel" />
+            <ui:Slider label="x2" value="1" high-value="1" direction="Horizontal" name="x2" page-size="1" />
+            <ui:VisualElement class="Seperator" />
+            <ui:Slider label="y2" value="0" high-value="1" direction="Horizontal" name="y2" page-size="1" />
+        </ui:VisualElement>
+        <ui:VisualElement name="p3" class="ValuePairContainer">
+            <ui:Label tabindex="-1" text="(1.00, 1.00)" display-tooltip-when-elided="true" name="p3Label" class="ValuePairLabel" />
+            <ui:Slider label="x3" value="1" high-value="1" direction="Horizontal" name="x3" page-size="1" />
+            <ui:VisualElement class="Seperator" />
+            <ui:Slider label="y3" value="1" high-value="1" direction="Horizontal" name="y3" page-size="1" />
+        </ui:VisualElement>
+        <ui:VisualElement name="p4" class="ValuePairContainer">
+            <ui:Label tabindex="-1" text="(0.00, 1.00)" display-tooltip-when-elided="true" name="p4Label" class="ValuePairLabel" />
+            <ui:Slider label="x4" value="0" high-value="1" direction="Horizontal" name="x4" page-size="1" />
+            <ui:VisualElement class="Seperator" />
+            <ui:Slider label="y4" value="1" high-value="1" direction="Horizontal" name="y4" page-size="1" />
+        </ui:VisualElement>
+        <ui:VisualElement name="filterCutoff" class="ValuePairContainer">
+            <ui:Label tabindex="-1" text="(0.00)" display-tooltip-when-elided="true" name="p4Label" class="ValuePairLabel" />
+            <ui:Slider label="Filter Cutoff" value="0" high-value="1" direction="Horizontal" name="x4" page-size="1" style="width: 336px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

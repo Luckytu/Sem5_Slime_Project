@@ -1,0 +1,55 @@
+float width;
+float height;
+
+RWTexture2D<float4> cameraMap;
+RWTexture2D<float4> resultMap;
+
+float filterCutoff;
+bool showFiltered;
+
+float a11, a12, a13;
+float a21, a22, a23;
+float a31, a32;
+
+#pragma kernel cameraCapture
+
+[numthreads(8,8,1)]
+void cameraCapture (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x < 0 || id.x >= (uint) width || id.y < 0 || id.y >= (uint) height)
+    {
+        return;
+    }
+
+    float x = id.x / width;
+    float y = id.y / height;
+    
+    //projected homogenous coordinates
+    float3 projH = float3(a11 * x + a12 * y + a13,
+                          a21 * x + a22 * y + a23,
+                          a31 * x + a32 * y + 1);
+    
+    //de-homogenized coordinates
+    float2 projected = float2(projH.x / projH.z, projH.y / projH.z);
+    
+    float4 color = cameraMap[(int2) float2(projected.x * width, projected.y * height)];
+                
+    //HSV value
+    float value = max(color.r, max(color.g, color.b));
+
+    if (showFiltered)
+    {
+        if (value <= filterCutoff)
+        {
+            resultMap[id.xy] = float4(1, 1, 1, 1);
+        }
+        else
+        {
+            resultMap[id.xy] = float4(0, 0, 0, 0);
+        }
+    }
+    else
+    {
+        resultMap[id.xy] = color;
+    }
+}

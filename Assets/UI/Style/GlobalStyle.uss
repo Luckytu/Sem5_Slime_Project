@@ -1,0 +1,75 @@
+.UIContainer {
+    flex-grow: 1;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.Button {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    color: rgb(255, 255, 255);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    transition-property: border-bottom-color;
+    transition-duration: 0.2s;
+}
+
+.Button:hover {
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    transition-property: border-bottom-color;
+    transition-duration: 0.2s;
+}
+
+.HideAnimation {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 2s;
+}
+
+.ShowAnimation {
+    transition-property: opacity;
+    transition-duration: 2s;
+}
+
+.Seperator {
+    flex-grow: 0;
+    background-color: rgb(255, 255, 255);
+    width: 2px;
+    height: 60%;
+    margin-left: 4px;
+    margin-right: 4px;
+    align-self: center;
+}
+
+.BaseText {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url('project://database/Assets/Fonts/zector.regular.ttf?fileID=12800000&guid=b7c692aa53e15614f9e8b85374b7c210&type=3#zector.regular');
+    -unity-font-style: bold;
+    font-size: 18px;
+}
