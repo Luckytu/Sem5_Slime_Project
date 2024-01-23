@@ -1,23 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PauseMenuUI : UIGraphElement
 {
-    public override void onEnable()
+    [SerializeField] private UIGraphElement cameraSettingsUI;
+
+    private Button back;
+    private Button quit;
+    private Button simulationSettings;
+    private Button cameraSettings;
+
+    private void Start()
     {
-        throw new System.NotImplementedException();
+        root.visible = false;
+
+        back = root.Q("BackButton") as Button;
+        back.RegisterCallback<ClickEvent>(backButtonClick);
+
+        quit = root.Q("QuitGameButton") as Button;
+        quit.RegisterCallback<ClickEvent>(quitButtonClick);
+
+        simulationSettings = root.Q("SimulationSettingsButton") as Button;
+
+        cameraSettings = root.Q("CameraSettingsButton") as Button;
+        cameraSettings.RegisterCallback<ClickEvent>(cameraSettingsClick);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            root.visible = !root.visible;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void backButtonClick(ClickEvent e)
     {
-        
+        onDisable();
+    }
+
+    private void quitButtonClick(ClickEvent e)
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
+
+    private void cameraSettingsClick(ClickEvent e)
+    {
+        onDisable();
+
+        cameraSettingsUI.enable();
+    }
+
+    public override void onDisable()
+    {
+        root.visible = false;
+    }
+
+    public override void enable()
+    {
+        root.visible = true;
     }
 }

@@ -90,7 +90,7 @@ public class SimulationManager : MonoBehaviour
 
         GraphicsUtility.createRenderTexture(ref debugMap, width, height, filterMode, graphicsFormat);
 
-        foodMap = cameraCapture.getCameraCapture();
+        foodMap = cameraCapture.resultMap;
 
         setSpecies();
         setAgents();

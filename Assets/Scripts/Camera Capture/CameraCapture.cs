@@ -14,8 +14,8 @@ public class CameraCapture : MonoBehaviour
     [SerializeField] private ComputeShader cameraCaptureShader;
     [SerializeField] private SimulationManager simulation;
     [SerializeField] private UIDocument ui;
-    [SerializeField] private RenderTexture cameraMap;
-    [SerializeField] private RenderTexture resultMap;
+    [SerializeField] public RenderTexture cameraMap;
+    [SerializeField] public RenderTexture resultMap;
 
     [Header("Graphics Settings")]
     [SerializeField] private FilterMode filterMode;
@@ -23,8 +23,14 @@ public class CameraCapture : MonoBehaviour
     [SerializeField][Range(0, 1)] private float filterCutoff;
     [SerializeField] private bool showFiltered;
 
-    [Header("Projection")]
-    [SerializeField][Range(0, 1)] private float x1, y1, x2, y2, x3, y3, x4, y4;
+    public struct EdgePointCoords
+    {
+        public float x1, y1;
+        public float x2, y2;
+        public float x3, y3;
+        public float x4, y4;
+    }
+    private EdgePointCoords p;
 
     private int cameraCaptureKernel = 0;
 
@@ -35,6 +41,14 @@ public class CameraCapture : MonoBehaviour
     {
         GraphicsUtility.createRenderTexture(ref cameraMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
         GraphicsUtility.createRenderTexture(ref resultMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
+
+        p = new EdgePointCoords()
+        {
+            x1 = 0.302f, y1 = 0.277f,
+            x2 = 0.818f, y2 = 0.264f,
+            x3 = 0.805f, y3 = 0.742f,
+            x4 = 0.327f, y4 = 0.799f
+        };
     }
 
     void Start()
@@ -70,14 +84,6 @@ public class CameraCapture : MonoBehaviour
         {
             webCamTexture = new WebCamTexture(devices[1].name, 1920 / 5, 1080 / 5, 30);
             webCamTexture.Play();
-
-            /*
-            Image cameraInput = ui.rootVisualElement.Q("CameraInput") as Image;
-            Image cameraOutput = ui.rootVisualElement.Q("CameraOutput") as Image;
-
-            cameraInput.image = cameraMap;
-            cameraOutput.image = resultMap;
-            */
         }
         else
         {
@@ -96,7 +102,7 @@ public class CameraCapture : MonoBehaviour
 
     private void setOnUpdate()
     {
-        Matrix3x3 A = projectiveMapping.getTransformationMatrix(x1, y1, x2, y2, x3, y3, x4, y4);
+        Matrix3x3 A = projectiveMapping.getTransformationMatrix(p.x1, p.y1, p.x2, p.y2, p.x3, p.y3, p.x4, p.y4);
 
         cameraCaptureShader.SetFloat("a11", A.a11);
         cameraCaptureShader.SetFloat("a12", A.a12);
@@ -113,8 +119,8 @@ public class CameraCapture : MonoBehaviour
         cameraCaptureShader.SetBool("showFiltered", showFiltered);
     }
 
-    public RenderTexture getCameraCapture()
+    public EdgePointCoords getEdgePoints()
     {
-        return resultMap;
+        return p;
     }
 }

@@ -1,31 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public abstract class UIGraphElement : MonoBehaviour, IUIGraph
+[RequireComponent(typeof(UIDocument))]
+
+public abstract class UIGraphElement : MonoBehaviour
 {
-    [SerializeField] private Transform UIBackground;
+    protected Transform uiBackGround { get; } = UIProperties.uiBackground;
+    protected UIDocument uiDocument { get; set; }
+    protected VisualElement root { get; set; }
+    protected bool active { get; set; }
 
-    public void onDisable()
+    protected virtual void Update()
     {
-        throw new System.NotImplementedException();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            uiBackGround.gameObject.SetActive(false);
+            root.visible = false;
+        }
     }
 
-    public abstract void onEnable();
-
-    [ContextMenu("Editor_Setup")]
-    public void dingusBingus() {
-    }
-
-    // Start is called before the first frame update
-    void Start()
+    protected virtual void Awake()
     {
-        
+        uiDocument = GetComponent<UIDocument>();
+        root = uiDocument.rootVisualElement;
+        root.visible = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void onDisable();
+
+    public abstract void enable();
 }

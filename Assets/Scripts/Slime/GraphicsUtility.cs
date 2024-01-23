@@ -6,7 +6,6 @@ using UnityEngine.Experimental.Rendering;
 
 public static class GraphicsUtility
 {
-
     public static void dispatch(ref ComputeShader shader, int kernelID, int groupsX, int groupsY)
     {
         Vector3Int threadGroupSizes = getThreadGroupSizes(shader, kernelID);

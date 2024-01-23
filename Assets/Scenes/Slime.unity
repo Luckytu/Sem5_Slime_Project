@@ -1066,6 +1066,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1838934853}
+  - component: {fileID: 1838934854}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -1092,6 +1093,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1838934854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838934852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f25949f2dbf914d9d64e7493b61f04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiBackground: {fileID: 0}
 --- !u!850595691 &1859372711
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1163,13 +1177,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1872507003}
   - component: {fileID: 1872507004}
+  - component: {fileID: 1872507005}
   m_Layer: 0
   m_Name: CameraSettingsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1872507003
 Transform:
   m_ObjectHideFlags: 0
@@ -1202,6 +1217,21 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 19b86de4c3d43b74d8704ab771cfb08c,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &1872507005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872507002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f821a6a4d387dd478289479f5c70aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraSettingsInGameUI: {fileID: 2126102049}
+  PauseMenuUI: {fileID: 2009281404}
+  cameraCapture: {fileID: 341094667}
 --- !u!1 &2009281401
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,7 +1249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2009281402
 Transform:
   m_ObjectHideFlags: 0
@@ -1264,7 +1294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cf97f02a95aaa42a67e601dd067c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIBackground: {fileID: 0}
+  cameraSettingsUI: {fileID: 1872507005}
 --- !u!1 &2044239092
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,6 +1362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2126102047}
   - component: {fileID: 2126102048}
+  - component: {fileID: 2126102049}
   m_Layer: 0
   m_Name: CameraSettingsInGameUI
   m_TagString: Untagged
@@ -1371,3 +1402,15 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 838971123f4a89b4e824e4f2452affc3,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &2126102049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126102046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489df0c25f4c16b40aff8f613b91080a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
