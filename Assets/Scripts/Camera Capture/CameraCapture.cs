@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.UIElements;
@@ -20,8 +21,10 @@ public class CameraCapture : MonoBehaviour
     [Header("Graphics Settings")]
     [SerializeField] private FilterMode filterMode;
     [SerializeField] private GraphicsFormat graphicsFormat;
-    [SerializeField][Range(0, 1)] private float filterCutoff;
+    [SerializeField] public float filterCutoff { get; set; }
     [SerializeField] private bool showFiltered;
+
+    private MeshRenderer rend;
 
     public struct EdgePointCoords
     {
@@ -57,6 +60,10 @@ public class CameraCapture : MonoBehaviour
 
         setOnStart();
         initCaptureCamera();
+
+        rend = GetComponent<MeshRenderer>();
+        rend.material.mainTexture = resultMap;
+        rend.enabled = false;
     }
 
     void Update()
@@ -122,5 +129,36 @@ public class CameraCapture : MonoBehaviour
     public EdgePointCoords getEdgePoints()
     {
         return p;
+    }
+
+    public void setEdgePoints(String edgePointName, float x, float y)
+    {
+        switch (edgePointName)
+        {
+            case "x1":
+                p.x1 = x; p.y1 = y;
+                break;
+            case "x2":
+                p.x2 = x; p.y2 = y;
+                break;
+            case "x3":
+                p.x3 = x; p.y3 = y;
+                break;
+            case "x4":
+                p.x4 = x; p.y4 = y;
+                break;
+            default:
+                return;
+        }
+    }
+
+    public void show()
+    {
+        rend.enabled = true;
+    }
+
+    public void hide()
+    {
+        rend.enabled = false;
     }
 }

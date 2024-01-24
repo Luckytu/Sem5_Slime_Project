@@ -64,3 +64,12 @@
     justify-content: center;
     align-items: center;
 }
+
+.unity-toggle__input {
+}
+
+.unity-toggle__label {
+    -unity-font-definition: url('project://database/Assets/Fonts/zector.regular.ttf?fileID=12800000&guid=b7c692aa53e15614f9e8b85374b7c210&type=3#zector.regular');
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}

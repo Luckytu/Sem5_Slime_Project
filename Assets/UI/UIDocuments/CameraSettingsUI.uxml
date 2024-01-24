@@ -5,18 +5,19 @@
         <ui:VisualElement name="CameraControlsContainer" class="CameraControlsContainer">
             <ui:VisualElement name="CameraInputContainer" class="CameraImagesContainer">
                 <ui:Image name="CameraInput" class="CameraImages" />
-                <ui:Label text="+" display-tooltip-when-elided="true" parse-escape-sequences="true" selectable="false" name="x1" class="ProjectionControlPoint" style="top: 96px; left: 19px; color: rgb(64, 214, 25);" />
+                <ui:Label text="+" display-tooltip-when-elided="true" parse-escape-sequences="true" selectable="false" name="x4" class="ProjectionControlPoint" style="top: 50px; left: 47px;" />
+                <ui:Label text="+" display-tooltip-when-elided="true" parse-escape-sequences="true" selectable="false" name="x1" class="ProjectionControlPoint" style="top: 96px; left: 19px;" />
                 <ui:Label text="+" display-tooltip-when-elided="true" parse-escape-sequences="true" selectable="false" name="x2" class="ProjectionControlPoint" style="top: 78px; left: 167px;" />
                 <ui:Label text="+" display-tooltip-when-elided="true" parse-escape-sequences="true" selectable="false" name="x3" class="ProjectionControlPoint" style="top: 5px; left: 161px;" />
-                <ui:Label text="+" display-tooltip-when-elided="true" parse-escape-sequences="true" selectable="false" name="x4" class="ProjectionControlPoint" style="top: 31px; left: 19px; color: rgb(25, 118, 214);" />
             </ui:VisualElement>
             <ui:VisualElement name="CameraOutputContainer" class="CameraImagesContainer">
                 <ui:Image name="CameraOutput" class="CameraImages" />
             </ui:VisualElement>
+            <ui:Toggle label="Toggle" name="showFilteredToggle" style="display: none;" />
         </ui:VisualElement>
         <ui:VisualElement name="CameraButtonContainer" class="CameraButtonContainer">
-            <ui:Button text="&lt; Back" name="BackButton" class="Button" />
-            <ui:Button text="Edit in-Game &gt;" name="EditInGameViewButton" class="Button" />
+            <ui:Button text="&lt; Back" name="BackButton" class="Button BaseText" />
+            <ui:Button text="Edit in-Game &gt;" name="EditInGameViewButton" class="Button BaseText" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
