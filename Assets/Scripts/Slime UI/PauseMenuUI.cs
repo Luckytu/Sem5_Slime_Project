@@ -1,3 +1,4 @@
+using Global;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,7 +7,7 @@ namespace Slime_UI
     public class PauseMenuUI : UIGraphElement
     {
         [SerializeField] private UIGraphElement cameraSettingsUI;
-
+        
         private Button back;
         private Button quit;
         private Button simulationSettings;
@@ -17,28 +18,35 @@ namespace Slime_UI
             root.visible = false;
 
             back = root.Q("BackButton") as Button;
-            back.RegisterCallback<ClickEvent>(backButtonClick);
+            back?.RegisterCallback<ClickEvent>(backButtonClick);
 
             quit = root.Q("QuitGameButton") as Button;
-            quit.RegisterCallback<ClickEvent>(quitButtonClick);
+            quit?.RegisterCallback<ClickEvent>(quitButtonClick);
 
             simulationSettings = root.Q("SimulationSettingsButton") as Button;
 
             cameraSettings = root.Q("CameraSettingsButton") as Button;
-            cameraSettings.RegisterCallback<ClickEvent>(cameraSettingsClick);
+            cameraSettings?.RegisterCallback<ClickEvent>(cameraSettingsClick);
         }
 
         protected override void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                root.visible = !root.visible;
+                if (GameState.state == GameState.Simulation)
+                {
+                    enable();
+                }
+                else
+                {
+                    fallback();
+                }
             }
         }
 
         private void backButtonClick(ClickEvent e)
         {
-            onDisable();
+            disable();
         }
 
         private void quitButtonClick(ClickEvent e)
@@ -49,24 +57,28 @@ namespace Slime_UI
 
         private void cameraSettingsClick(ClickEvent e)
         {
-            onDisable();
+            disable();
 
             cameraSettingsUI.enable();
         }
 
-        public override void onDisable()
-        {
-            root.visible = false;
-        }
-
         public override void enable()
         {
+            active = true;
+            GameState.state = GameState.Paused;
             root.visible = true;
         }
-
+        
+        public override void disable()
+        {
+            active = false;
+            GameState.state = GameState.Simulation;
+            root.visible = false;
+        }
+        
         protected override void fallback()
         {
-            throw new System.NotImplementedException();
+            disable();
         }
     }
 }

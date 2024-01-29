@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Slime_UI
@@ -7,14 +8,17 @@ namespace Slime_UI
 
     public abstract class UIGraphElement : MonoBehaviour
     {
+        [SerializeField] protected UnityEvent onEnable;
+        [SerializeField] protected UnityEvent onDisable;
+        
         protected Transform uiBackGround { get; } = UIProperties.uiBackground;
         protected UIDocument uiDocument { get; set; }
         protected VisualElement root { get; set; }
-        protected bool active { get; set; }
+        protected bool active { get; set; } = false;
 
         protected virtual void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && active)
             {
                 fallback();
             }
@@ -27,7 +31,7 @@ namespace Slime_UI
             root.visible = false;
         }
 
-        public abstract void onDisable();
+        public abstract void disable();
 
         public abstract void enable();
 

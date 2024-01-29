@@ -1,4 +1,6 @@
 using System;
+using Camera_Capture;
+using Global;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,22 +23,22 @@ namespace Slime_UI
         private Image inputImage;
         private Image outputImage;
         private VisualElement x1, x2, x3, x4;
-        private CameraCapture.EdgePointCoords p;
+        private CameraCaptureSettings.EdgePointCoords p;
 
         private void Start()
         {
             root.visible = false;
 
             back = root.Q("BackButton") as Button;
-            back.RegisterCallback<ClickEvent>(backButtonClick);
+            back?.RegisterCallback<ClickEvent>(backButtonClick);
 
             editInGameView = root.Q("EditInGameViewButton") as Button;
-            editInGameView.RegisterCallback<ClickEvent>(editInGameViewClick);
+            editInGameView?.RegisterCallback<ClickEvent>(editInGameViewClick);
 
             cameraControlsContainer = root.Q("CameraControlsContainer");
         
             inputImageContainer = root.Q("CameraInputContainer");
-            inputImageContainer.RegisterCallback<GeometryChangedEvent>(initializeEdgePoints);
+            inputImageContainer?.RegisterCallback<GeometryChangedEvent>(initializeEdgePoints);
 
             inputImage = root.Q("CameraInput") as Image;
             outputImage = root.Q("CameraOutput") as Image;
@@ -98,8 +100,6 @@ namespace Slime_UI
             //might be useful
             //x = (float) Math.Round(x, 2);
             //y = (float) Math.Round(y, 2);
-
-            Debug.Log("x:" + x + " y:" + y);
 
             cameraCapture.setEdgePoints(dragDropTarget.name, x, y);
         }
@@ -169,33 +169,36 @@ namespace Slime_UI
 
         private void backButtonClick(ClickEvent e)
         {
-            onDisable();
-
-            PauseMenuUI.enable();
+            fallback();
         }
 
         private void editInGameViewClick(ClickEvent e)
         {
-            onDisable();
+            disable();
 
             CameraSettingsInGameUI.enable();
         }
 
         public override void enable()
         {
+            active = true;
+            GameState.state = GameState.Paused;
             root.visible = true;
-
+            
             setUpCameraImages();
         }
     
-        public override void onDisable()
+        public override void disable()
         {
+            active = false;
+            GameState.state = GameState.Simulation;
             root.visible = false;
         }
 
         protected override void fallback()
         {
-            throw new NotImplementedException();
+            disable();
+            PauseMenuUI.enable();
         }
     }
 }

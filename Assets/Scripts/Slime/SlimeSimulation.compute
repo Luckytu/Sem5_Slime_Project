@@ -10,7 +10,8 @@ float agentContributionRatio;
 float randomVariance;
 float randomDeath;
 
-float4 backgroundColor;
+bool scanFoodMap;
+float4 foodColor;
 
 struct Agent
 {
@@ -299,7 +300,16 @@ void display(uint3 id : SV_DispatchThreadID)
     //displayMap[id.xy] = 1 - diffusedTrailMap[id.xy];
     
     float foodAlpha = foodMap[id.xy].a;
-    float4 color = foodMap[id.xy] + (1 - diffusedTrailMap[id.xy]) * (1 - foodAlpha);
+    float4 color;
+
+    if(scanFoodMap)
+    {
+        color = foodMap[id.xy] * foodColor + (1 - diffusedTrailMap[id.xy]) * (1 - foodAlpha);
+    }
+    else
+    {
+        color = foodMap[id.xy] * foodColor + (diffusedTrailMap[id.xy]) * (1 - foodAlpha); 
+    }
     
     displayMap[id.xy] = color;
     

@@ -26,6 +26,9 @@ public class ProjectiveMapping : MonoBehaviour
         return A;
     }
 
+    //Quelle:
+    //Burger, Wilhelm & Burge, Mark James (2015)
+    //Digitale Bildverarbeitung – Eine algorithmische Einführung in Java (3. Auflage)
     private void calculateTransformationParameters()
     {
         A.a31 = ((x1 - x2 + x3 - x4) * (y4 - y3) - (y1 - y2 + y3 - y4) * (x4 - x3))
