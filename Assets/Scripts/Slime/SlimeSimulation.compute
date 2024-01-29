@@ -28,6 +28,10 @@ struct Species
     float4 color;
     
     float2 spawnPosition;
+    int spawns;
+    int availableSpawns;
+    float hungerAccumulation;
+    float interSpeciesHungerModifier;
     
     float moveSpeed;
     float turnSpeed;

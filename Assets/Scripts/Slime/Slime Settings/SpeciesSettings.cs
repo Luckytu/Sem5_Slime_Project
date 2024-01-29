@@ -35,7 +35,7 @@ namespace Slime.Slime_Settings
             
             float x = Random.Range(GameSettings.width * margin, GameSettings.width * (1 - margin));
             float y = Random.Range(GameSettings.height * margin, GameSettings.height * (1 - margin));
-
+            
             species[speciesIndex].spawnPosition = new Vector2(x, y);
         }
         

@@ -45,5 +45,10 @@ namespace Slime.Slime_Settings
             GraphicsUtility.createRenderTexture(ref foodMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
             GraphicsUtility.createRenderTexture(ref debugMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
         }
+        
+        private void OnEnable()
+        {
+            hideFlags = HideFlags.DontUnloadUnusedAsset;
+        }
     }
 }

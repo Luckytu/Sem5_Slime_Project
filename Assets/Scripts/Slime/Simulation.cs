@@ -8,13 +8,6 @@ namespace Slime
 {
     public abstract class Simulation : MonoBehaviour
     {
-        [Header("Texture Maps")]
-        [SerializeField] protected RenderTexture foodMap;
-        [SerializeField] protected RenderTexture preTrailMap;
-        [SerializeField] protected RenderTexture diffusedTrailMap;
-        [SerializeField] protected RenderTexture displayMap;
-        [SerializeField] protected RenderTexture debugMap;
-        
         [Header("Shader")]
         [SerializeField] protected ComputeShader simulationShader;
         

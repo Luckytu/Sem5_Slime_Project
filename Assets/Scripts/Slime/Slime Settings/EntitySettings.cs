@@ -20,7 +20,7 @@ namespace Slime.Slime_Settings
         public void setupEntities(int entityAmount, int[] speciesEntities, Vector2[] speciesSpawnPositions, float spawnRadius)
         {
             entities = new Entity[entityAmount];
-
+            
             int offset = 0;
             for (int speciesIndex = 0; speciesIndex < speciesEntities.Length; speciesIndex++)
             {

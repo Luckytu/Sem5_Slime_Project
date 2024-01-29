@@ -11,8 +11,8 @@ namespace Slime
         [SerializeField] private SimulationSettings simulationSettings;
         
         [SerializeField] private SpeciesSettings defaultSpeciesSettings;
-        private SpeciesSettings.Species[] species;
-        private SpeciesSettings _speciesSettings;
+        public SpeciesSettings.Species[] species;
+        public SpeciesSettings _speciesSettings;
         public SpeciesSettings speciesSettings
         {
             get => _speciesSettings;
@@ -39,9 +39,18 @@ namespace Slime
         private static readonly int AgentAmount      = Shader.PropertyToID("agentAmount");
         private static readonly int FoodColor        = Shader.PropertyToID("foodColor");
 
-        private void Start()
+        private void Awake()
         {
             simulationSettings.generateTextureMaps();
+            
+            if (useDefaultSpeciesSettings)
+            {
+                speciesSettings = defaultSpeciesSettings;
+            }
+        }
+
+        private void Start()
+        {
             startSimulation();
         }
 
@@ -93,19 +102,19 @@ namespace Slime
         
         private void setShaderParameters()
         {
-            simulationShader.SetTexture(updateKernel, FoodMap, foodMap);
-            simulationShader.SetTexture(displayKernel, FoodMap, foodMap);
+            simulationShader.SetTexture(updateKernel, FoodMap, simulationSettings.foodMap);
+            simulationShader.SetTexture(displayKernel, FoodMap, simulationSettings.foodMap);
 
-            simulationShader.SetTexture(updateKernel, PreTrailMap, preTrailMap);
-            simulationShader.SetTexture(diffuseKernel, PreTrailMap, preTrailMap);
+            simulationShader.SetTexture(updateKernel, PreTrailMap, simulationSettings.preTrailMap);
+            simulationShader.SetTexture(diffuseKernel, PreTrailMap, simulationSettings.preTrailMap);
 
-            simulationShader.SetTexture(diffuseKernel, DiffusedTrailMap, diffusedTrailMap);
-            simulationShader.SetTexture(displayKernel, DiffusedTrailMap, diffusedTrailMap);
+            simulationShader.SetTexture(diffuseKernel, DiffusedTrailMap, simulationSettings.diffusedTrailMap);
+            simulationShader.SetTexture(displayKernel, DiffusedTrailMap, simulationSettings.diffusedTrailMap);
 
-            simulationShader.SetTexture(displayKernel, DisplayMap, displayMap);
+            simulationShader.SetTexture(displayKernel, DisplayMap, simulationSettings.displayMap);
 
-            simulationShader.SetTexture(updateKernel, DebugMap, debugMap);
-            simulationShader.SetTexture(debugKernel, DebugMap, debugMap);
+            simulationShader.SetTexture(updateKernel, DebugMap, simulationSettings.debugMap);
+            simulationShader.SetTexture(debugKernel, DebugMap, simulationSettings.debugMap);
 
             simulationShader.SetInt(Width, GameSettings.width);
             simulationShader.SetInt(Height, GameSettings.height);

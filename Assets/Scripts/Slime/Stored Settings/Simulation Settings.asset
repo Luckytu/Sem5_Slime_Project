@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d89d1dce7334fcba06a153180f5560d, type: 3}
   m_Name: Simulation Settings
   m_EditorClassIdentifier: 
+  filterMode: 0
+  graphicsFormat: 48
   maxEntityAmount: 1000000
   maxSpeciesAmount: 8
-  decayRate: 0.5
-  diffuseRatio: 17
-  agentContributionRatio: 9.8
+  spawnMargin: 0.1
+  spawnRadius: 0.02
+  decayRate: 2.41
+  diffuseRatio: 37.9
+  agentContributionRatio: 16.1
   foodColor: {r: 0.9150943, g: 0.09064613, b: 0.15713657, a: 0}
   randomVariance: 0.04
   deathCutoff: 2.2
