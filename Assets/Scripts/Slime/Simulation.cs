@@ -1,6 +1,6 @@
 ﻿using System;
 using Global;
-using Slime.Slime_Settings;
+using Slime.Settings;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -10,6 +10,7 @@ namespace Slime
     {
         [Header("Shader")]
         [SerializeField] protected ComputeShader simulationShader;
+        [SerializeField] protected SimulationSettings simulationSettings;
         
         protected const int updateKernel = 0;
         protected const int diffuseKernel = 1;

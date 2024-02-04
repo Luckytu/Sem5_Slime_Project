@@ -1,17 +1,17 @@
 ﻿using System;
 using Global;
-using Slime.Slime_Settings;
+using Slime.Settings;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Slime
 {
     public class SimulationInit : Simulation
     {
-        [SerializeField] private SimulationSettings simulationSettings;
-        
+        [SerializeField] private UnityEvent onSimulationStart;
         [SerializeField] private SpeciesSettings defaultSpeciesSettings;
-        public SpeciesSettings.Species[] species;
+        private Species[] species;
         public SpeciesSettings _speciesSettings;
         public SpeciesSettings speciesSettings
         {
@@ -29,7 +29,8 @@ namespace Slime
         [SerializeField] private EntitySettings entities;
         
         //Cached Shader Parameters
-        private static readonly int FoodMap          = Shader.PropertyToID("foodMap");
+        private static readonly int FoodMap          = Shader.PropertyToID("preFoodMap");
+        private static readonly int DiffusedFoodMap  = Shader.PropertyToID("diffusedFoodMap");
         private static readonly int PreTrailMap      = Shader.PropertyToID("preTrailMap");
         private static readonly int DiffusedTrailMap = Shader.PropertyToID("diffusedTrailMap");
         private static readonly int DisplayMap       = Shader.PropertyToID("displayMap");
@@ -38,6 +39,7 @@ namespace Slime
         private static readonly int Height           = Shader.PropertyToID("height");
         private static readonly int AgentAmount      = Shader.PropertyToID("agentAmount");
         private static readonly int FoodColor        = Shader.PropertyToID("foodColor");
+        private static readonly int SpeciesAmount    = Shader.PropertyToID("speciesAmount");
 
         private void Awake()
         {
@@ -66,6 +68,7 @@ namespace Slime
             setShaderParameters();
             
             GameState.state = GameState.Simulation;
+            onSimulationStart.Invoke();
         }
 
         private void setupSpecies()
@@ -77,8 +80,10 @@ namespace Slime
                     speciesSettings.randomizeSpawnPosition(i, simulationSettings.spawnMargin);
                 }
             }
-            
+
+            simulationSettings.currentSpeciesAmount = species.Length;
             GraphicsUtility.setupShaderBuffer(ref simulationSettings.speciesBuffer, simulationShader, species, updateKernel, "species");
+            simulationShader.SetBuffer(displayKernel, "species", simulationSettings.speciesBuffer);
         }
 
         private void setupEntities()
@@ -88,7 +93,7 @@ namespace Slime
             
             for (int i = 0; i < species.Length; i++)
             {
-                speciesEntities[i] = species[i].spawns;
+                speciesEntities[i] = species[i].population;
                 spawnPositions[i] = species[i].spawnPosition;
             }
             
@@ -102,9 +107,13 @@ namespace Slime
         
         private void setShaderParameters()
         {
-            simulationShader.SetTexture(updateKernel, FoodMap, simulationSettings.foodMap);
-            simulationShader.SetTexture(displayKernel, FoodMap, simulationSettings.foodMap);
-
+            simulationShader.SetTexture(updateKernel, FoodMap, simulationSettings.preFoodMap);
+            simulationShader.SetTexture(diffuseKernel, FoodMap, simulationSettings.preFoodMap);
+            
+            simulationShader.SetTexture(updateKernel, DiffusedFoodMap, simulationSettings.diffusedFoodMap);
+            simulationShader.SetTexture(diffuseKernel, DiffusedFoodMap, simulationSettings.diffusedFoodMap);
+            simulationShader.SetTexture(displayKernel, DiffusedFoodMap, simulationSettings.diffusedFoodMap);
+            
             simulationShader.SetTexture(updateKernel, PreTrailMap, simulationSettings.preTrailMap);
             simulationShader.SetTexture(diffuseKernel, PreTrailMap, simulationSettings.preTrailMap);
 
@@ -119,6 +128,7 @@ namespace Slime
             simulationShader.SetInt(Width, GameSettings.width);
             simulationShader.SetInt(Height, GameSettings.height);
 
+            simulationShader.SetInt(SpeciesAmount, species.Length);
             simulationShader.SetInt(AgentAmount, simulationSettings.maxEntityAmount);
 
             simulationShader.SetVector(FoodColor, simulationSettings.foodColor);

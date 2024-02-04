@@ -1,6 +1,7 @@
 using System;
+using Camera_Capture;
 using Global;
-using Slime.Slime_Settings;
+using Slime.Settings;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Serialization;
@@ -12,15 +13,14 @@ namespace Slime
     {
         [Header("Graphics Settings")] [SerializeField]
         private bool showDebugMaps = false;
-
-        [SerializeField] private SimulationSettings simulationSettings;
+        
         [SerializeField] private SpeciesSettings speciesSettings;
         
         [SerializeField] private CameraCapture cameraCapture;
 
         [SerializeField] private Transform canvas;
         [SerializeField] private Transform debugCanvas;
-
+        
         private bool _scanFoodMap = false;
         public bool scanFoodMap
         {
@@ -31,14 +31,17 @@ namespace Slime
                 simulationShader.SetBool("scanFoodMap", scanFoodMap);
             }
         }
-
+        
+        private static readonly int CameraCaptureMap = Shader.PropertyToID("cameraCaptureMap");
+        
         // Start is called before the first frame update
         private void Start()
         {
-            updateFoodMap();
-
+            simulationSettings.cameraCaptureMap = cameraCapture.resultMap;
+            simulationShader.SetTexture(diffuseKernel, CameraCaptureMap, simulationSettings.cameraCaptureMap);
+            
             canvas.GetComponent<MeshRenderer>().material.mainTexture = simulationSettings.displayMap;
-            debugCanvas.GetComponent<MeshRenderer>().material.mainTexture = simulationSettings.debugMap;
+            debugCanvas.GetComponent<MeshRenderer>().material.mainTexture = simulationSettings.diffusedFoodMap;
         }
 
         private void FixedUpdate()
@@ -73,31 +76,35 @@ namespace Slime
             GraphicsUtility.dispatch(ref simulationShader, displayKernel, GameSettings.width, GameSettings.height);
 
             Graphics.Blit(simulationSettings.diffusedTrailMap, simulationSettings.preTrailMap);
+            Graphics.Blit(simulationSettings.diffusedFoodMap, simulationSettings.preFoodMap);
         }
 
         private void setOnUpdate()
         {
-            GraphicsUtility.createStructuredBuffer(ref simulationSettings.speciesBuffer, speciesSettings.species);
-            simulationShader.SetBuffer(updateKernel, "species", simulationSettings.speciesBuffer);
+            //GraphicsUtility.createStructuredBuffer(ref simulationSettings.speciesBuffer, speciesSettings.species);
+            //simulationShader.SetBuffer(updateKernel, "species", simulationSettings.speciesBuffer);
 
             simulationShader.SetFloat("time", Time.fixedTime);
             simulationShader.SetFloat("deltaTime", Time.fixedDeltaTime);
 
-            simulationShader.SetFloat("globalSpeed", speciesSettings.species[0].moveSpeed);
-            simulationShader.SetFloat("globalTurnSpeed", speciesSettings.species[0].turnSpeed);
-            simulationShader.SetFloat("globalSensorAngle", speciesSettings.species[0].sensorAngle);
-            simulationShader.SetFloat("globalSensorOffset", speciesSettings.species[0].sensorOffset);
-
             simulationShader.SetFloat("decayRate", simulationSettings.decayRate);
             simulationShader.SetFloat("diffuseRatio", simulationSettings.diffuseRatio);
             simulationShader.SetFloat("agentContributionRatio", simulationSettings.agentContributionRatio);
+            
+            simulationShader.SetFloat("minimumPopulationRatio", simulationSettings.minimumPopulationRatio);
+            simulationShader.SetFloat("maxFoodPheromoneStorage", simulationSettings.maxFoodPheromoneStorage);
+
+            simulationShader.SetFloat("sampleEntitiesAmount", simulationSettings.sampleEntitiesAmount);
+            simulationShader.SetFloat("minSpawnPointDistance", simulationSettings.minSpawnPointDistance);
+            simulationShader.SetFloat("spawnPointMoveMultiplier", simulationSettings.spawnPointMoveMultiplier);
+            
             simulationShader.SetFloat("randomVariance", simulationSettings.randomVariance);
-            simulationShader.SetFloat("randomDeath", simulationSettings.deathCutoff);
+            simulationShader.SetFloat("deathCutoff", simulationSettings.deathCutoff);
         }
         
         public void updateFoodMap()
         {
-            Graphics.Blit(cameraCapture.resultMap, simulationSettings.foodMap);
+            cameraCapture.updateCamera();
         }
         
         private void OnDestroy()

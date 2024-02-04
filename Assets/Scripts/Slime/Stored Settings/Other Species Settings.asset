@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 32
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089c680d48974a6c9bca7069d799c8ad, type: 3}
+  m_Name: Other Species Settings
+  m_EditorClassIdentifier: 
+  species:
+  - color: {r: 0.09803921, g: 0.22322848, b: 1, a: 1}
+    spawnPosition: {x: 465.06683, y: 665.6551}
+    entities: 2000
+    offset: 0
+    availableSpawns: 0
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 32
+    turnSpeed: 9.6
+    sensorAngle: 0.33
+    sensorOffset: 7.5
+  - color: {r: 1, g: 0.09803921, b: 0.18518287, a: 1}
+    spawnPosition: {x: 465.06683, y: 665.6551}
+    entities: 2000
+    offset: 2000
+    availableSpawns: 0
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 32
+    turnSpeed: 9.6
+    sensorAngle: 0.33
+    sensorOffset: 7.5

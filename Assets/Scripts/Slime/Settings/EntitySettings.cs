@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Slime.Slime_Settings
+namespace Slime.Settings
 {
     [CreateAssetMenu(fileName = "Entity Settings", menuName = "Settings/Simulation/Entity Settings", order = 0)]
     public class EntitySettings : ScriptableObject
@@ -13,6 +13,7 @@ namespace Slime.Slime_Settings
             public float angle;
 
             public float hunger;
+            public int foodPheromoneStorage;
         }
 
         public Entity[] entities;
@@ -20,6 +21,8 @@ namespace Slime.Slime_Settings
         public void setupEntities(int entityAmount, int[] speciesEntities, Vector2[] speciesSpawnPositions, float spawnRadius)
         {
             entities = new Entity[entityAmount];
+            
+            Debug.Log("Spawnradius: " + spawnRadius);
             
             int offset = 0;
             for (int speciesIndex = 0; speciesIndex < speciesEntities.Length; speciesIndex++)
@@ -36,7 +39,8 @@ namespace Slime.Slime_Settings
                         position = position,
                         angle = angle,
                         
-                        hunger = 0
+                        hunger = 0,
+                        foodPheromoneStorage = 0 
                     };
                 }
 

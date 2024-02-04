@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -17,10 +17,15 @@ MonoBehaviour:
   maxEntityAmount: 1000000
   maxSpeciesAmount: 8
   spawnMargin: 0.1
-  spawnRadius: 0.02
-  decayRate: 2.41
-  diffuseRatio: 37.9
-  agentContributionRatio: 16.1
-  foodColor: {r: 0.9150943, g: 0.09064613, b: 0.15713657, a: 0}
+  spawnRadius: 35.8
+  decayRate: 0.23
+  diffuseRatio: 797.9
+  agentContributionRatio: 332.7
+  minimumPopulationRatio: 0.2
+  maxFoodPheromoneStorage: 1000
+  sampleEntitiesAmount: 100
+  minSpawnPointDistance: 200
+  spawnPointMoveMultiplier: 0.05
+  foodColor: {r: 0.9150943, g: 0.09064613, b: 0.15713657, a: 1}
   randomVariance: 0.04
-  deathCutoff: 2.2
+  deathCutoff: 24.96

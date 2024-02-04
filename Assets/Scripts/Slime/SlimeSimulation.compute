@@ -8,7 +8,14 @@ float decayRate;
 float diffuseRatio;
 float agentContributionRatio;
 float randomVariance;
-float randomDeath;
+float deathCutoff;
+
+float minimumPopulationRatio;
+int maxFoodPheromoneStorage;
+
+int sampleEntitiesAmount;
+float minSpawnPointDistance;
+float spawnPointMoveMultiplier;
 
 bool scanFoodMap;
 float4 foodColor;
@@ -21,6 +28,7 @@ struct Agent
     float angle;
     
     float hunger;
+    int foodPheromoneStorage;
 };
 
 struct Species
@@ -28,8 +36,9 @@ struct Species
     float4 color;
     
     float2 spawnPosition;
-    int spawns;
-    int availableSpawns;
+    int population;
+    int offset;
+    int alivePopulation;
     float hungerAccumulation;
     float interSpeciesHungerModifier;
     
@@ -40,14 +49,17 @@ struct Species
     float sensorOffset;
 };
 
-StructuredBuffer<Species> species;
+RWStructuredBuffer<Species> species;
 uint speciesAmount;
 
 RWStructuredBuffer<Agent> agents;
 uint agentAmount;
 
 //Simulation Maps
-RWTexture2D<float4> foodMap;
+RWTexture2D<float4> cameraCaptureMap;
+RWTexture2D<float4> preFoodMap;
+RWTexture2D<float4> diffusedFoodMap;
+
 RWTexture2D<float4> preTrailMap;
 RWTexture2D<float4> diffusedTrailMap;
 
@@ -56,15 +68,6 @@ RWTexture2D<float4> displayMap;
 
 //Debug
 RWTexture2D<float4> debugMap;
-
-// DEBUG //
-
-float globalSpeed;
-float globalTurnSpeed;
-float globalSensorAngle;
-float globalSensorOffset;
-
-// END DEBUG //
 
 // Quelle: www.cs.ubc.ca/~rbridson/docs/schechter-sca08-turbulence.pdf
 uint hash(uint seed)
@@ -111,11 +114,11 @@ float convertToH(float4 rgb)
     return 0.0;
 }
 
-void senseDebug(Agent agent, float angle, float weight)
+void senseDebug(Agent agent, Species agentSpecies, float angle, float weight)
 {   
     float sensorAngle = agent.angle + angle;
     float2 sensorVector = float2(cos(sensorAngle), sin(sensorAngle));
-    float2 sensorPos = agent.position + sensorVector * globalSensorOffset;
+    float2 sensorPos = agent.position + sensorVector * agentSpecies.offset;
     
     float r = weight;
     float b = 1.0 - r;
@@ -127,7 +130,7 @@ float sense(Agent agent, Species agentSpecies, float angle, int id)
 {
     float sensorAngle = agent.angle + angle;
     float2 sensorVector = float2(cos(sensorAngle), sin(sensorAngle));
-    float2 sensorPosition = agent.position + sensorVector * globalSensorOffset;
+    float2 sensorPosition = agent.position + sensorVector * agentSpecies.sensorOffset;
     
     int2 sensorCoords = (int2) sensorPosition;
     
@@ -135,6 +138,12 @@ float sense(Agent agent, Species agentSpecies, float angle, int id)
     sensorCoords.y = clamp(sensorCoords.y, 0, height);
     
     float4 sample = preTrailMap[sensorCoords];
+    float4 foodSample = preFoodMap[sensorCoords];
+
+    if(foodSample.a > 0.98)
+    {
+        return 5000;
+    }
     
     float agentHue = convertToH(agentSpecies.color);
     float sampleHue = convertToH(sample);
@@ -146,16 +155,55 @@ float sense(Agent agent, Species agentSpecies, float angle, int id)
     float smoothWeight = 8 * pow(diff, 2) - 8 * diff + 1;
     
     //agent becomes hungry if it collides with different species
-    if (value > 0.9 && smoothWeight < 0)
+    if (value > 0.82 && smoothWeight < 0)
     {
         agents[id].hunger -= smoothWeight;
     }
     
     //calculates the difference between the agents hue and the sample hue and smoothly maps it to [-1;1]
     //this results in larger differences pushing each other away while similar values attract each other
-    return smoothWeight + value / 2;
+    return (smoothWeight + value / 2) * (foodSample.a + 0.5);
     
     //return preTrailMap[sensorCoords].r + preTrailMap[sensorCoords].g + preTrailMap[sensorCoords].b;
+}
+
+float2 respawn(Agent agent, Species agentSpecies, float random, int id)
+{
+    int randomOffset = agentSpecies.offset + random * agentSpecies.population;
+
+    if(randomOffset >= agentSpecies.offset + sampleEntitiesAmount)
+    {
+        randomOffset -= sampleEntitiesAmount;
+    }
+    
+    float2 averageSpeciesPosition;
+    for(int i = 0; i < sampleEntitiesAmount; i++)
+    {
+        averageSpeciesPosition += agents[randomOffset + i].position;
+    }
+    averageSpeciesPosition = averageSpeciesPosition / sampleEntitiesAmount;
+
+    float2 spawnMoveVector = (averageSpeciesPosition - species[agent.speciesIndex].spawnPosition) * spawnPointMoveMultiplier;
+
+    float2 otherSpawnPointsVector;
+    for(int k = 0; k < speciesAmount; k++)
+    {
+        if(k == agent.speciesIndex)
+        {
+            continue;
+        }
+
+        const float2 differenceVector = species[k].spawnPosition - species[agent.speciesIndex].spawnPosition;
+        const float distanceContribution = max(0, minSpawnPointDistance - length(differenceVector)) / minSpawnPointDistance;
+        
+        otherSpawnPointsVector += differenceVector * distanceContribution;
+    }
+    otherSpawnPointsVector /= (speciesAmount - 1);
+    otherSpawnPointsVector *= -spawnPointMoveMultiplier;
+    
+    spawnMoveVector += otherSpawnPointsVector;
+    species[agent.speciesIndex].spawnPosition += spawnMoveVector;
+    return species[agent.speciesIndex].spawnPosition;
 }
 
 #pragma kernel update
@@ -170,48 +218,74 @@ void update(uint3 id : SV_DispatchThreadID)
     
     Agent agent = agents[id.x];
     Species agentSpecies = species[agent.speciesIndex];
-    
-    //sense
-    float weightLeft = sense(agent, agentSpecies, globalSensorAngle, id.x);
-    float weightForward = sense(agent, agentSpecies, 0, id.x);
-    float weightRight = sense(agent, agentSpecies, -globalSensorAngle, id.x);
-    
-    senseDebug(agent, globalSensorAngle, weightLeft);
-    senseDebug(agent, 0, weightForward);
-    senseDebug(agent, -globalSensorAngle, weightRight);
-    
     float random = hash01(agent.position.y * width + agent.position.x + hash(id.x + time * 100000));
 
-    // Continue in same direction
-    if (weightForward > weightLeft && weightForward > weightRight && random > randomVariance)
+    agents[id.x].hunger += agentSpecies.hungerAccumulation * deltaTime;
+    const int spawns = species[agent.speciesIndex].alivePopulation;
+    const float deathChance = max(minimumPopulationRatio, (float) spawns / (float) species[agent.speciesIndex].population);
+    if(random > deathChance)
     {
-        agents[id.x].angle += 0;
+        return;
     }
-    else if (weightForward < weightLeft && weightForward < weightRight || random <= randomVariance)
+    //kill (set back to spawn) if the agent is too hungry
+    if ((agents[id.x].hunger * random * randomVariance) + (agents[id.x].hunger * (1 - randomVariance)) > deathCutoff)
     {
-        agents[id.x].angle += (random - 0.5) * 2 * globalTurnSpeed * deltaTime;
+        agents[id.x].position = respawn(agent, agentSpecies, random, id.x);
+        agents[id.x].hunger = 0;
+        
+        agents[id.x].foodPheromoneStorage = 0;
+        
+        species[agent.speciesIndex].alivePopulation = clamp(spawns - 1, spawns * minimumPopulationRatio, species[agent.speciesIndex].population);
+        
+        return;
     }
-	// Turn left
-    else if (weightLeft > weightRight)
+    
+    //sense
+    float weightLeft = sense(agent, agentSpecies, agentSpecies.sensorAngle, id.x);
+    float weightForward = sense(agent, agentSpecies, 0, id.x);
+    float weightRight = sense(agent, agentSpecies, -agentSpecies.sensorAngle, id.x);
+    
+    senseDebug(agent, agentSpecies, agentSpecies.sensorAngle, weightLeft);
+    senseDebug(agent, agentSpecies, 0, weightForward);
+    senseDebug(agent, agentSpecies, -agentSpecies.sensorAngle, weightRight);
+    
+    //weight is > 1000 if food Source has been found
+    if(weightForward > 1000 || weightLeft > 1000 || weightRight > 1000)
     {
-        agents[id.x].angle += random * globalTurnSpeed * deltaTime;
+        agents[id.x].angle += 3.14159265359;
+        agents[id.x].foodPheromoneStorage = maxFoodPheromoneStorage;
+
+        if(random > randomVariance)
+        {
+            species[agent.speciesIndex].alivePopulation++;
+        }
     }
-	// Turn right
-    else if (weightRight > weightLeft)
+    else
     {
-        agents[id.x].angle -= random * globalTurnSpeed * deltaTime;
+        // Continue in same direction
+        if (weightForward > weightLeft && weightForward > weightRight && random > randomVariance)
+        {
+            agents[id.x].angle += 0;
+        }
+        else if (weightForward < weightLeft && weightForward < weightRight || random <= randomVariance)
+        {
+            agents[id.x].angle += (random - 0.5) * 2 * agentSpecies.turnSpeed * deltaTime;
+        }
+	    // Turn left
+        else if (weightLeft > weightRight)
+        {
+            agents[id.x].angle += random * agentSpecies.turnSpeed * deltaTime;
+        }
+	    // Turn right
+        else if (weightRight > weightLeft)
+        {
+            agents[id.x].angle -= random * agentSpecies.turnSpeed * deltaTime;
+        }
     }
     
     //direction in which agent moves and new position
     float2 moveVector = float2(cos(agents[id.x].angle), sin(agents[id.x].angle));
-    float2 position = agent.position + moveVector * deltaTime * globalSpeed;
-    
-    //kill (set back to spawn) if the agent is too hungry
-    if (random * agents[id.x].hunger > randomDeath)
-    {
-        position = agentSpecies.spawnPosition;
-        agents[id.x].hunger = 0;
-    }
+    float2 position = agent.position + moveVector * deltaTime * agentSpecies.moveSpeed;
     
     //bounce off borders
     if (position.x < 0 || position.x >= width || position.y < 0 || position.y >= height)
@@ -246,6 +320,16 @@ void update(uint3 id : SV_DispatchThreadID)
         int2 coords = (int2) position;
         float4 oldMap = preTrailMap[coords];
         preTrailMap[coords] = min(agentSpecies.color, oldMap + agentSpecies.color * agentContributionRatio * deltaTime);
+        
+        if(agent.foodPheromoneStorage > 0)
+        {
+            float pheromones = (float)agents[id.x].foodPheromoneStorage;
+            agents[id.x].foodPheromoneStorage--;
+
+            pheromones = (pheromones / maxFoodPheromoneStorage) * 0.9;
+            
+            preFoodMap[(int2) agent.position] = float4(1,1,1, pheromones);
+        }
     }
     
     agents[id.x].position = position;
@@ -261,8 +345,11 @@ void diffuse (uint3 id : SV_DispatchThreadID)
         return;
     }
     
-    float4 color = preTrailMap[id.xy];
-    float4 sum = 0;
+    float4 trailColor = preTrailMap[id.xy];
+    float4 trailSum = 0;
+
+    float4 foodColor = preFoodMap[id.xy];
+    float4 foodSum = 0;
     
     for (int x = -1; x <= 1; x++)
     {
@@ -271,15 +358,36 @@ void diffuse (uint3 id : SV_DispatchThreadID)
             int sampleX = clamp(id.x + x, 0, width);
             int sampleY = clamp(id.y + y, 0, height);
             
-            sum += preTrailMap[int2(sampleX, sampleY)];
+            trailSum += preTrailMap[int2(sampleX, sampleY)];
+            foodSum += preFoodMap[int2(sampleX, sampleY)];
         }
     }
     
-    float4 blurredColor = sum / 9;
+    float4 blurredColor = trailSum / 9;
     float diffuseWeight = saturate(diffuseRatio * deltaTime);
-    blurredColor = color * (1 - diffuseWeight) + blurredColor * diffuseWeight;
+    blurredColor = trailColor * (1 - diffuseWeight) + blurredColor * diffuseWeight;
     
     diffusedTrailMap[id.xy] = max(0, blurredColor - decayRate * deltaTime);
+
+    float4 blurredFood = foodSum / 9;
+    blurredFood = foodColor * (1 - diffuseWeight) + blurredFood * diffuseWeight;
+
+    if(cameraCaptureMap[id.xy].a == 1)
+    {
+        blurredFood = float4(1,1,1,1);
+    }
+    
+    diffusedFoodMap[id.xy] = max(0, blurredFood - decayRate * deltaTime);;
+}
+
+float3 shiftColor(float t)
+{
+    float3 a = float3(0.500, 0.500, 0.500);
+    float3 b = float3(1.000, 1.000, 1.000);
+    float3 c = float3(1.000, 1.000, 1.000);
+    float3 d = float3(0.000, 0.333, 0.667);
+
+    return a + b*cos(6.28318*(c*t+d));
 }
 
 #pragma kernel display
@@ -292,30 +400,43 @@ void display(uint3 id : SV_DispatchThreadID)
         return;
     }
     
-    //background color
-    /*
-    float alpha = diffusedTrailMap[id.xy].a;
-    float3 color = diffusedTrailMap[id.xy].rgb * alpha + backgroundColor.rgb * (1 - alpha);    
+    float foodAlpha = diffusedFoodMap[id.xy].a;
+    float4 color = diffusedTrailMap[id.xy];
 
-    displayMap[id.xy] = float4(color, 1);
+    /* TODO: Mabye play around with this a bit, idk
+    float4 shiftedColor = float4(shiftColor(convertToH(color) + 0.1), color.a);
+
+    color = lerp(min(1, color.a * color.a), color, shiftedColor);
+
+    color = color.a * color + (1 - color.a) * float4(0,0,0,1);
     */
     
-    //invert color
-    //displayMap[id.xy] = 1 - diffusedTrailMap[id.xy];
-    
-    float foodAlpha = foodMap[id.xy].a;
-    float4 color;
-
     if(scanFoodMap)
     {
-        color = foodMap[id.xy] * foodColor + (1 - diffusedTrailMap[id.xy]) * (1 - foodAlpha);
+        color = diffusedFoodMap[id.xy] * foodColor + (1 - color) * (1 - foodAlpha);
     }
     else
     {
-        color = foodMap[id.xy] * foodColor + (diffusedTrailMap[id.xy]) * (1 - foodAlpha); 
+        color = diffusedFoodMap[id.xy] * foodColor + color * (1 - foodAlpha); 
     }
-    
+
     displayMap[id.xy] = color;
+
+    //DEBUG
+    /*
+    for(uint i = 0; i < speciesAmount; i++)
+    {
+        const int2 spawnCoords = (int2) species[i].spawnPosition; 
+
+        for(int x = 0; x < 5; x++)
+        {
+            for(int y = 0; y < 5; y++)
+            {
+                displayMap[spawnCoords + int2(x,y)] = float4(1, 1, 1, 1);
+            }
+        }
+    }
+    */
     
     //displayMap[id.xy] = foodMap[id.xy];
 }

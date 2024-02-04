@@ -13,41 +13,45 @@ MonoBehaviour:
   m_Name: Default Species Settings
   m_EditorClassIdentifier: 
   species:
-  - color: {r: 0.09019608, g: 0.9137255, b: 0.88080615, a: 0}
-    spawnPosition: {x: 867.257, y: 159.11105}
-    spawns: 500000
-    availableSpawns: 0
-    hungerAccumulation: 0
+  - color: {r: 1, g: 0.63579774, b: 0.09803921, a: 1}
+    spawnPosition: {x: 794.7974, y: 404.4241}
+    population: 500000
+    offset: 0
+    alivePopulation: 500000
+    hungerAccumulation: 1.25
     interSpeciesHungerModifier: 0
     moveSpeed: 32
     turnSpeed: 9.6
     sensorAngle: 0.33
     sensorOffset: 7.5
-  - color: {r: 0.9137255, g: 0.09019608, b: 0.7108335, a: 0}
-    spawnPosition: {x: 405.60297, y: 660.6394}
-    spawns: 250000
-    availableSpawns: 0
-    hungerAccumulation: 0
+  - color: {r: 0.09803921, g: 0.37413663, b: 1, a: 1}
+    spawnPosition: {x: 773.9519, y: 311.07275}
+    population: 250000
+    offset: 500000
+    alivePopulation: 250000
+    hungerAccumulation: 1.27
     interSpeciesHungerModifier: 0
     moveSpeed: 32
     turnSpeed: 9.6
     sensorAngle: 0.33
     sensorOffset: 7.5
-  - color: {r: 0.9137255, g: 0.50236434, b: 0.09019608, a: 0}
-    spawnPosition: {x: 1599.8088, y: 204.02394}
-    spawns: 125000
-    availableSpawns: 0
-    hungerAccumulation: 0
+  - color: {r: 1, g: 0.09803921, b: 0.268983, a: 1}
+    spawnPosition: {x: 1106.6285, y: 256.03845}
+    population: 125000
+    offset: 750000
+    alivePopulation: 125000
+    hungerAccumulation: 1.5
     interSpeciesHungerModifier: 0
     moveSpeed: 32
     turnSpeed: 9.6
     sensorAngle: 0.33
     sensorOffset: 7.5
-  - color: {r: 0.15584286, g: 0.9137255, b: 0.09019608, a: 0}
-    spawnPosition: {x: 1072.5856, y: 400.37106}
-    spawns: 125000
-    availableSpawns: 0
-    hungerAccumulation: 0
+  - color: {r: 0.8192562, g: 0.09803921, b: 1, a: 1}
+    spawnPosition: {x: 744.6397, y: 377.96906}
+    population: 125000
+    offset: 875000
+    alivePopulation: 125000
+    hungerAccumulation: 1.2
     interSpeciesHungerModifier: 0
     moveSpeed: 32
     turnSpeed: 9.6

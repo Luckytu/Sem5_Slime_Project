@@ -1,29 +1,11 @@
 ﻿using Global;
 using UnityEngine;
 
-namespace Slime.Slime_Settings
+namespace Slime.Settings
 {
     [CreateAssetMenu(fileName = "Species Settings", menuName = "Settings/Simulation/Species Settings", order = 0)]
     public class SpeciesSettings : ScriptableObject
     {
-        [System.Serializable]
-        public struct Species
-        {
-            public Color color;
-            
-            public Vector2 spawnPosition;
-            public int spawns;
-            public int availableSpawns;
-            public float hungerAccumulation;
-            public float interSpeciesHungerModifier;
-            
-            public float moveSpeed;
-            public float turnSpeed;
-
-            public float sensorAngle;
-            public float sensorOffset;
-        }
-
         public Species[] species;
 
         public void randomizeSpawnPosition(int speciesIndex, float margin)

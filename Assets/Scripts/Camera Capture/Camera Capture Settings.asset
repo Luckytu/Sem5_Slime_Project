@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Camera Capture Settings
   m_EditorClassIdentifier: 
   p:
-    x1: 0.23558648
-    y1: 0.2535461
-    x2: 0.76441354
-    y2: 0.2429078
-    x3: 0.7465209
-    y3: 0.7180851
-    x4: 0.26341948
-    y4: 0.8421986
-  filterCutoff: 0.15
+    x1: 0.24864376
+    y1: 0.30483872
+    x2: 0.75135624
+    y2: 0.2596774
+    x3: 0.7368897
+    y3: 0.6951613
+    x4: 0.27938518
+    y4: 0.84032255
+  filterCutoff: 0.79

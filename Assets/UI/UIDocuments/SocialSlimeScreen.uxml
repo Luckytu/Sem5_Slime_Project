@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=48b06a5911ee8684487e47e8f3aeb238&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Assets/UI/Style/SocialSlimeStyle.uss?fileID=7433441132597879392&amp;guid=c78c73f4fb2754e4a82982f555ee91cf&amp;type=3#SocialSlimeStyle" />
+    <ui:VisualElement name="SocialSlimeContainer" class="UIContainer">
+        <ui:VisualElement name="InputContainer" class="InputContainer" style="align-self: center; flex-direction: column; flex-grow: 1; justify-content: center;">
+            <ui:TextField label="@" placeholder-text="012345678901234567890123456789" name="EnterInstagram" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

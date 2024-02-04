@@ -224,9 +224,10 @@ MonoBehaviour:
   ui: {fileID: 1872507004}
   cameraMap: {fileID: 0}
   resultMap: {fileID: 0}
-  filterMode: 0
+  filterMode: 1
   graphicsFormat: 48
   showFiltered: 1
+  updateConstantly: 0
 --- !u!114 &341094668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +261,7 @@ GameObject:
   - component: {fileID: 392849024}
   - component: {fileID: 392849027}
   - component: {fileID: 392849025}
+  - component: {fileID: 392849028}
   m_Layer: 0
   m_Name: Slime Simulation
   m_TagString: Untagged
@@ -297,8 +299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simulationShader: {fileID: 7200000, guid: 9d321db15b3e5eb4fad520bc3845f115, type: 3}
-  showDebugMaps: 0
   simulationSettings: {fileID: 11400000, guid: 017ab43df5b928942bc59fbdb5112885, type: 2}
+  showDebugMaps: 1
   speciesSettings: {fileID: 11400000, guid: c493966fdb23e264dad680b0af1f519e, type: 2}
   cameraCapture: {fileID: 341094667}
   canvas: {fileID: 1172672817}
@@ -317,11 +319,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simulationShader: {fileID: 7200000, guid: 9d321db15b3e5eb4fad520bc3845f115, type: 3}
   simulationSettings: {fileID: 11400000, guid: 017ab43df5b928942bc59fbdb5112885, type: 2}
+  onSimulationStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.SlimeEffects, Assembly-CSharp
+        m_MethodName: initializeSpecies
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   defaultSpeciesSettings: {fileID: 11400000, guid: c493966fdb23e264dad680b0af1f519e,
     type: 2}
+  _speciesSettings: {fileID: 0}
   useDefaultSpeciesSettings: 1
   randomizeSpawn: 1
   entities: {fileID: 11400000, guid: 2728873e3a306ac4a8bf0dbd42c36269, type: 2}
+--- !u!114 &392849028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392849023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0816890021745c6909124fa1b7504e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simulationShader: {fileID: 7200000, guid: 9d321db15b3e5eb4fad520bc3845f115, type: 3}
+  simulationSettings: {fileID: 11400000, guid: 017ab43df5b928942bc59fbdb5112885, type: 2}
+  speciesDataDisplay: {fileID: 982726847}
+  entityReadAmount: 20
 --- !u!1 &402208930
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +386,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2029783246}
+  - {fileID: 1437247504}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
@@ -491,6 +526,117 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &798142504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 798142506}
+  - component: {fileID: 798142505}
+  m_Layer: 0
+  m_Name: InstagramGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &798142505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798142504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc16e2f50acf4789bcd633b495665a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomSettings: {fileID: 0}
+  simulationSettings: {fileID: 0}
+--- !u!4 &798142506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798142504}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.1917007, y: -0.663184, z: 5.1022377}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &982726844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 982726845}
+  - component: {fileID: 982726846}
+  - component: {fileID: 982726847}
+  m_Layer: 0
+  m_Name: SpeciesDataDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &982726845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982726844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1680100281}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &982726846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982726844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 7422adb33947be547acecebb97707c28, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 1b9d9db2ca4a1e5448ee191aa4287bb7,
+    type: 3}
+  m_SortingOrder: 0
+--- !u!114 &982726847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982726844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7075fc33ef240e2b6c071b23bd7978d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 982726846}
+  dataDisplaySource: {fileID: 9197481963319205126, guid: 3d9056ea220581b40be64b75bc0823f2,
+    type: 3}
 --- !u!1 &1172672816
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,6 +722,75 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172672816}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1437247503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1437247504}
+  - component: {fileID: 1437247508}
+  - component: {fileID: 1437247509}
+  m_Layer: 0
+  m_Name: General
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1437247504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437247503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 402208932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1437247508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437247503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37381d9a7073499997fe5694644b1cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  first: {fileID: 1437247509}
+  startImmediately: 1
+--- !u!114 &1437247509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437247503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8432884b4f8947598bd560d9163679f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 1437247508}
+  duration: 3.23
+  remaining: 0
+  next: {fileID: 0}
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1439520870
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +818,7 @@ Transform:
   m_GameObject: {fileID: 1439520870}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.59}
+  m_LocalPosition: {x: 17.82, y: 0, z: -0.59}
   m_LocalScale: {x: 16, y: 9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -723,7 +938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1635336132
 RectTransform:
   m_ObjectHideFlags: 0
@@ -807,6 +1022,38 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1680100280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1680100281}
+  m_Layer: 0
+  m_Name: Effects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1680100281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680100280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 982726845}
+  m_Father: {fileID: 1838934853}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1687192305
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,7 +1072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1687192306
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1023,6 +1270,7 @@ Transform:
   - {fileID: 1872507003}
   - {fileID: 2126102047}
   - {fileID: 1635336132}
+  - {fileID: 1680100281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1838934854
@@ -1037,7 +1285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f25949f2dbf914d9d64e7493b61f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiBackground: {fileID: 0}
+  _uiBackground: {fileID: 1687192306}
 --- !u!850595691 &1859372711
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1285,7 +1533,7 @@ MonoBehaviour:
   onExecutionStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 392849025}
         m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
         m_MethodName: set_scanFoodMap
         m_Mode: 6
@@ -1300,8 +1548,8 @@ MonoBehaviour:
   onExecutionFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SimulationManager, Assembly-CSharp
+      - m_Target: {fileID: 392849025}
+        m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
         m_MethodName: updateFoodMap
         m_Mode: 1
         m_Arguments:
@@ -1312,7 +1560,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 392849025}
         m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
         m_MethodName: set_scanFoodMap
         m_Mode: 6
@@ -1452,7 +1700,7 @@ MonoBehaviour:
   onEnable:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 392849025}
         m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
         m_MethodName: set_scanFoodMap
         m_Mode: 6
@@ -1467,7 +1715,7 @@ MonoBehaviour:
   onDisable:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 392849025}
         m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
         m_MethodName: set_scanFoodMap
         m_Mode: 6
@@ -1482,7 +1730,7 @@ MonoBehaviour:
   updateCamera:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 392849025}
         m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
         m_MethodName: updateFoodMap
         m_Mode: 1
@@ -1506,3 +1754,4 @@ SceneRoots:
   - {fileID: 341094666}
   - {fileID: 1838934853}
   - {fileID: 402208932}
+  - {fileID: 798142506}
