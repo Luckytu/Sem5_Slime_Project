@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameFlow.Interpolators;
+using InstagramGeneration;
 using Slime;
 using Slime.Settings;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class InstagramSlimeGenerator : MonoBehaviour
     [SerializeField] private int maxFollowing;
     [SerializeField] private int maxPosts;
     
-    public Species generate(string username, int followers, int following, int posts, int population, int offset, float margin)
+    public InstagramSlime generate(string username, int followers, int following, int posts, float margin)
     {
         Random.InitState(username.GetHashCode());
         
@@ -43,9 +44,9 @@ public class InstagramSlimeGenerator : MonoBehaviour
             color = randomGenerationSettings.color.Evaluate(Random.Range(0f, 1f)),
 
             spawnPosition = SpeciesSettings.getRandomSpawnPosition(margin),
-            population = population,
-            offset = offset,
-            alivePopulation = population,
+            population = 125000,
+            offset = 0,
+            alivePopulation = 125000,
             hungerAccumulation = hungerAccumulation,
             interSpeciesHungerModifier = Random.Range(randomGenerationSettings.minInterSpeciesHungerModifier, randomGenerationSettings.maxInterSpeciesHungerModifier),
             
@@ -56,6 +57,6 @@ public class InstagramSlimeGenerator : MonoBehaviour
             sensorOffset = Random.Range(randomGenerationSettings.minSensorOffset, randomGenerationSettings.maxSensorOffset)
         };
 
-        return species;
+        return new InstagramSlime(username, followers, following, posts, species);
     }
 }

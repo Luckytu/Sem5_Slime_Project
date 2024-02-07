@@ -24,8 +24,8 @@ namespace Camera_Capture
         [Header("Graphics Settings")]
         [SerializeField] private FilterMode filterMode;
         [SerializeField] private GraphicsFormat graphicsFormat;
-        [SerializeField] private bool showFiltered;
-        [SerializeField] private bool updateConstantly;
+        [SerializeField] public bool showFiltered;
+        [SerializeField] public bool updateConstantly;
 
         private MeshRenderer rend;
     

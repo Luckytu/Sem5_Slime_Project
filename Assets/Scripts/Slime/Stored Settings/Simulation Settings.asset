@@ -16,9 +16,10 @@ MonoBehaviour:
   graphicsFormat: 48
   maxEntityAmount: 1000000
   maxSpeciesAmount: 8
-  currentSpeciesAmount: 4
-  spawnMargin: 0.1
+  minSpeciesAmount: 4
+  currentSpeciesAmount: 5
   spawnRadius: 35.8
+  foodColor: {r: 0.9150943, g: 0.09064613, b: 0.15713657, a: 1}
   decayRate: 0.23
   diffuseRatio: 797.9
   agentContributionRatio: 332.7
@@ -27,6 +28,5 @@ MonoBehaviour:
   sampleEntitiesAmount: 100
   minSpawnPointDistance: 200
   spawnPointMoveMultiplier: 0.05
-  foodColor: {r: 0.9150943, g: 0.09064613, b: 0.15713657, a: 1}
   randomVariance: 0.04
   deathCutoff: 24.96

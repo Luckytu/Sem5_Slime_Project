@@ -1,9 +1,92 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Style/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=48b06a5911ee8684487e47e8f3aeb238&amp;type=3#GlobalStyle" />
     <Style src="project://database/Assets/UI/Style/SocialSlimeStyle.uss?fileID=7433441132597879392&amp;guid=c78c73f4fb2754e4a82982f555ee91cf&amp;type=3#SocialSlimeStyle" />
-    <ui:VisualElement name="SocialSlimeContainer" class="UIContainer">
-        <ui:VisualElement name="InputContainer" class="InputContainer" style="align-self: center; flex-direction: column; flex-grow: 1; justify-content: center;">
-            <ui:TextField label="@" placeholder-text="012345678901234567890123456789" name="EnterInstagram" />
+    <ui:VisualElement name="SocialSlimeContainer" class="UIContainer UICenter" style="align-items: stretch;">
+        <ui:VisualElement name="InputContainer" class="InputContainer">
+            <ui:Label text="Please enter your instagram username" class="BaseText TitleText" />
+            <ui:TextField label="@" name="EnterInstagram" max-length="30" />
+            <ui:Label text="press enter to confirm" class="BaseText TitleText" />
+        </ui:VisualElement>
+        <ui:VisualElement style="margin-bottom: 38px;">
+            <ui:Label text="Active" class="TitleText BaseText" style="align-self: center;" />
+            <ui:VisualElement name="SlimesContainer" class="BaseText SlimesContainer" style="align-self: stretch;">
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="the_blunicorn" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="280000" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="Label" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="Label" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="Label" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="Label" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="Label" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="Label" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slime" class="Slime" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Username" />
+                    <ui:Label text="Label" name="Posts" />
+                    <ui:Label text="Label" name="Followers" />
+                    <ui:Label text="Label" name="Following" />
+                    <ui:Label text="Label" name="Lifetime" />
+                    <ui:Label text="Label" name="Population" />
+                    <ui:Label text="Label" name="AlivePopulation" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="QueueContainer" class="BaseText QueueContainer QueueText" style="flex-shrink: 1;">
+            <ui:Label text="in queue" name="Label" class="TitleText" />
+            <ui:VisualElement name="Queue" class="Slime" style="flex-grow: 1; min-width: 184px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

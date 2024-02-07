@@ -184,6 +184,9 @@ namespace Slime_UI
             active = true;
             GameState.state = GameState.Paused;
             root.visible = true;
+
+            cameraCapture.showFiltered = false;
+            cameraCapture.updateConstantly = true;
             
             setUpCameraImages();
         }
@@ -193,6 +196,9 @@ namespace Slime_UI
             active = false;
             GameState.state = GameState.Simulation;
             root.visible = false;
+            
+            cameraCapture.showFiltered = true;
+            cameraCapture.updateConstantly = false;
         }
 
         protected override void fallback()

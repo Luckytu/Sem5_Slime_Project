@@ -346,11 +346,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  defaultSpeciesSettings: {fileID: 11400000, guid: eedf5b5b41d389944aec68b143ff4835,
+  defaultSpeciesSettings: {fileID: 11400000, guid: 821d15ad874d8ec4e9c0d4ee2e6daef5,
     type: 2}
-  _speciesSettings: {fileID: 0}
   useDefaultSpeciesSettings: 1
-  randomizeSpawn: 1
+  randomizeSpawn: 0
   entities: {fileID: 11400000, guid: 2728873e3a306ac4a8bf0dbd42c36269, type: 2}
 --- !u!114 &392849028
 MonoBehaviour:
@@ -654,7 +653,9 @@ GameObject:
   m_Component:
   - component: {fileID: 798142506}
   - component: {fileID: 798142505}
+  - component: {fileID: 798142508}
   - component: {fileID: 798142507}
+  - component: {fileID: 798142509}
   m_Layer: 0
   m_Name: InstagramGenerator
   m_TagString: Untagged
@@ -677,6 +678,7 @@ MonoBehaviour:
   randomSettings: {fileID: 11400000, guid: 2fe55c40fae9de64f9b4768c9547d8e7, type: 2}
   simulationSettings: {fileID: 11400000, guid: 017ab43df5b928942bc59fbdb5112885, type: 2}
   speciesSettings: {fileID: 11400000, guid: 821d15ad874d8ec4e9c0d4ee2e6daef5, type: 2}
+  instagramSlimeGenerator: {fileID: 798142508}
   simulationInit: {fileID: 392849027}
   loadingTimeline: {fileID: 798142507}
   onUpdateQueueSlots:
@@ -684,14 +686,23 @@ MonoBehaviour:
       m_Calls: []
   onUpdateAlive:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2117879039}
+        m_TargetAssemblyTypeName: InstagramGeneration.InstagramUI, Assembly-CSharp
+        m_MethodName: updateSlimes
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdateArchived:
     m_PersistentCalls:
       m_Calls: []
-  onUpdateQueue:
-    m_PersistentCalls:
-      m_Calls: []
-  openQueueSlots: 0
+  openQueueSlots: 3
   coolDown: 27
   coolDownVariance: 13
 --- !u!4 &798142506
@@ -721,8 +732,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37381d9a7073499997fe5694644b1cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  first: {fileID: 0}
+  first: {fileID: 798142509}
   startImmediately: 0
+--- !u!114 &798142508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798142504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b0d823fd04753643867310f6f5f873e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomGenerationSettings: {fileID: 11400000, guid: 2fe55c40fae9de64f9b4768c9547d8e7,
+    type: 2}
+  followerInterpolator: {fileID: 11400000, guid: bb27fce2380102648814b1bf9857e4c4,
+    type: 2}
+  followingInterpolator: {fileID: 11400000, guid: bb27fce2380102648814b1bf9857e4c4,
+    type: 2}
+  postsInterpolator: {fileID: 11400000, guid: bb27fce2380102648814b1bf9857e4c4, type: 2}
+  maxFollowers: 1500
+  maxFollowing: 1500
+  maxPosts: 500
+--- !u!114 &798142509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798142504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8432884b4f8947598bd560d9163679f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 0}
+  duration: 2
+  remaining: 0
+  randomVariance: 0
+  next: {fileID: 0}
+  loopThis: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 798142505}
+        m_TargetAssemblyTypeName: InstagramGeneration.InstagramSlimeManager, Assembly-CSharp
+        m_MethodName: resetSimulation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &852685245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,6 +1109,18 @@ MonoBehaviour:
       - m_Target: {fileID: 392849028}
         m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
         m_MethodName: randomizeEntityReadOffset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1454585078}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2679,6 +2760,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2117879037}
   - component: {fileID: 2117879038}
+  - component: {fileID: 2117879039}
   m_Layer: 0
   m_Name: SocialSlimeScreen
   m_TagString: Untagged
@@ -2718,6 +2800,19 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: eea9a876d4224e746abe1ddadd3f0b12,
     type: 3}
   m_SortingOrder: 0
+--- !u!114 &2117879039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117879036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ba90975ef748caabdcdc1f0093b990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 2117879038}
 --- !u!1 &2126102046
 GameObject:
   m_ObjectHideFlags: 0
@@ -2783,8 +2878,8 @@ MonoBehaviour:
   onEnable:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 392849025}
-        m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
         m_MethodName: set_scanFoodMap
         m_Mode: 6
         m_Arguments:
@@ -2798,8 +2893,8 @@ MonoBehaviour:
   onDisable:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 392849025}
-        m_TargetAssemblyTypeName: Slime.SimulationManager, Assembly-CSharp
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
         m_MethodName: set_scanFoodMap
         m_Mode: 6
         m_Arguments:
@@ -2826,6 +2921,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   cameraSettingsUI: {fileID: 1872507005}
+  cameraCapture: {fileID: 341094667}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ namespace Slime
         [SerializeField] private UnityEvent onSimulationStart;
         [SerializeField] private SpeciesSettings defaultSpeciesSettings;
         private Species[] species;
-        public SpeciesSettings _speciesSettings;
+        private SpeciesSettings _speciesSettings;
         public SpeciesSettings speciesSettings
         {
             get => _speciesSettings;
@@ -22,7 +22,7 @@ namespace Slime
                 species = value.species;
             }
         }
-        [SerializeField] private bool useDefaultSpeciesSettings = true;
+        [SerializeField] public bool useDefaultSpeciesSettings = true;
 
         [SerializeField] private bool randomizeSpawn = true;
         

@@ -6,7 +6,7 @@ namespace Slime.Settings
     [CreateAssetMenu(fileName = "Species Settings", menuName = "Settings/Simulation/Species Settings", order = 0)]
     public class SpeciesSettings : ScriptableObject
     {
-        [SerializeField] private float spawnMargin;
+        public float spawnMargin;
         
         public Species[] species;
 

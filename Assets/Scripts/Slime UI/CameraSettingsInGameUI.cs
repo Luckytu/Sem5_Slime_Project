@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Camera_Capture;
 using Global;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,7 @@ namespace Slime_UI
         [SerializeField] private UnityEvent updateCamera;
         
         [SerializeField] private CameraSettingsUI cameraSettingsUI;
+        [SerializeField] private CameraCapture cameraCapture;
         
         private void Start()
         {
@@ -41,6 +43,9 @@ namespace Slime_UI
             GameState.state = GameState.EditCameraInGame;
             root.visible = true;
             
+            cameraCapture.showFiltered = true;
+            cameraCapture.updateConstantly = true;
+            
             onEnable.Invoke();
         }
     
@@ -50,6 +55,9 @@ namespace Slime_UI
             GameState.state = GameState.Paused;
             root.visible = false;
             cameraSettingsUI.enable();
+            
+            cameraCapture.showFiltered = true;
+            cameraCapture.updateConstantly = false;
         }
 
         protected override void fallback()

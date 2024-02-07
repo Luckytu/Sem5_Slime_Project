@@ -22,14 +22,14 @@ namespace InstagramGeneration
         [SerializeField] private SimulationSettings simulationSettings;
         [SerializeField] private SpeciesSettings speciesSettings;
 
+        [SerializeField] private InstagramSlimeGenerator instagramSlimeGenerator;
         [SerializeField] private SimulationInit simulationInit;
         [SerializeField] private Timeline loadingTimeline;
         
         [SerializeField] private UnityEvent<int> onUpdateQueueSlots;
         [SerializeField] private UnityEvent<List<InstagramSlime>> onUpdateAlive;
         [SerializeField] private UnityEvent<List<InstagramSlime>> onUpdateArchived;
-        [SerializeField] private UnityEvent<List<string>> onUpdateQueue;
-        [SerializeField] private int openQueueSlots;
+        [SerializeField] private int openQueueSlots = 4;
 
         [SerializeField] private float coolDown = 14;
         [SerializeField] private float coolDownVariance = 5;
@@ -53,6 +53,13 @@ namespace InstagramGeneration
             
             //registerProfile("joebiden");
             //registerProfile("taylorswift");
+            
+            slimeQueue.Enqueue(instagramSlimeGenerator.generate("luwucif", 57, 274, 1, 0.1f));
+            slimeQueue.Enqueue(instagramSlimeGenerator.generate("mucha_gue", 38, 49, 0, 0.1f));
+            slimeQueue.Enqueue(instagramSlimeGenerator.generate("the_blunicorn", 1164, 1372, 346, 0.1f));
+            slimeQueue.Enqueue(instagramSlimeGenerator.generate("laramzp", 854, 659, 32, 0.1f));
+            slimeQueue.Enqueue(instagramSlimeGenerator.generate("einfaltslos", 653, 945, 153, 0.1f));
+            generate();
         }
 
         private void Update()
@@ -69,7 +76,7 @@ namespace InstagramGeneration
         {
             profileQueue.Enqueue(username);
             openQueueSlots--;
-            onUpdateQueueSlots.Invoke(openQueueSlots);
+            onUpdateQueueSlots.Invoke(-1);
         }
 
         private void processProfiles()
@@ -94,25 +101,7 @@ namespace InstagramGeneration
             Debug.Log("can process again");
             canFetchNewProfile = true;
         }
-
-        public void generate()
-        {
-            //kill ones that exceed max Lifetime
-            killByLifetime();
-            
-            //kill ones that exceed low population
-            killByPopulation();
-
-            while (simulationSettings.currentSpeciesAmount < simulationSettings.maxSpeciesAmount)
-            {
-                aliveSlimes.Add(slimeQueue.Dequeue());
-                simulationSettings.currentSpeciesAmount = aliveSlimes.Count;
-            }
-            
-            //call resetSimulation from Timeline
-            loadingTimeline.startTimeLine();
-        }
-
+        
         public void resetSimulation()
         {
             StartCoroutine(startSimulation());
@@ -120,18 +109,75 @@ namespace InstagramGeneration
 
         private IEnumerator startSimulation()
         {
+            simulationSettings.currentSpeciesAmount = aliveSlimes.Count;
+            simulationInit.useDefaultSpeciesSettings = false;
+            simulationInit.speciesSettings = speciesSettings;
             simulationInit.startSimulation();
             yield break;
         }
         
+        public void generate()
+        {
+            //kill ones that exceed max Lifetime
+            killByLifetime();
+            
+            //kill ones that exceed low population
+            killByPopulation();
+            
+            //fill up empty slots with slimes from queue
+            while (slimeQueue.Count > 0 && aliveSlimes.Count < simulationSettings.maxSpeciesAmount)
+            {
+                Debug.Log("queue " + slimeQueue.Count);
+                aliveSlimes.Add(slimeQueue.Dequeue());
+                openQueueSlots++;
+                onUpdateQueueSlots.Invoke(1);
+            }
+            
+            Debug.Log("aliveSlimes " + aliveSlimes.Count);
+            
+            //redistribute and recalculate populations
+            int totalPopulation = 0;
+            foreach (InstagramSlime slime in aliveSlimes)
+            {
+                totalPopulation += slime.species.alivePopulation;
+            }
+
+            int previousPopulation = 0;
+            for(int i = 0; i < aliveSlimes.Count; i++)
+            {
+                int population = (int)(((float)aliveSlimes[i].species.alivePopulation / (float)totalPopulation) * simulationSettings.maxEntityAmount);
+                Species species = aliveSlimes[i].species;
+                
+                if (i == aliveSlimes.Count - 1 && previousPopulation + population > simulationSettings.maxEntityAmount)
+                {
+                    population = simulationSettings.maxEntityAmount - previousPopulation;
+                }
+                
+                species.population = population;
+                species.alivePopulation = population;
+                species.offset = previousPopulation;
+                
+                aliveSlimes[i].species = species;
+                previousPopulation += population;
+            }
+            
+            //gather species for simulation
+            speciesSettings.species = aliveSlimes.Select(s => s.species).ToArray();
+            
+            onUpdateAlive.Invoke(aliveSlimes);
+            
+            //call resetSimulation from Timeline
+            loadingTimeline.startTimeLine();
+        }
+        
         private void killByLifetime()
         {
-            if (simulationSettings.currentSpeciesAmount <= simulationSettings.minSpeciesAmount)
+            if (aliveSlimes.Count <= simulationSettings.minSpeciesAmount)
             {
                 return;
             }
             
-            List<InstagramSlime> orderedByLifetime = aliveSlimes.OrderByDescending(o => o.lifeTime).ToList();
+            List<InstagramSlime> orderedByLifetime = aliveSlimes.OrderByDescending(s => s.lifeTime).ToList();
 
             foreach (InstagramSlime slime in orderedByLifetime)
             {
@@ -142,7 +188,7 @@ namespace InstagramGeneration
                     simulationSettings.currentSpeciesAmount = aliveSlimes.Count;
                 }
                 
-                if (simulationSettings.currentSpeciesAmount <= simulationSettings.minSpeciesAmount)
+                if (aliveSlimes.Count <= simulationSettings.minSpeciesAmount)
                 {
                     return;
                 }
@@ -164,10 +210,9 @@ namespace InstagramGeneration
                 {
                     archivedSlimes.Add(slime);
                     aliveSlimes.Remove(slime);
-                    simulationSettings.currentSpeciesAmount = aliveSlimes.Count;
                 }
                 
-                if (simulationSettings.currentSpeciesAmount <= simulationSettings.minSpeciesAmount)
+                if (aliveSlimes.Count <= simulationSettings.minSpeciesAmount)
                 {
                     return;
                 }
@@ -220,7 +265,19 @@ namespace InstagramGeneration
             Debug.Log("followers = " + followerMatch);
             Debug.Log("following = " + followingMatch);
             Debug.Log("posts = " + postsMatch);
+
+            int followers = Int32.Parse(followerMatch);
+            int following = Int32.Parse(followingMatch);
+            int posts = Int32.Parse(postsMatch);
             
+            createSlime(username, posts, followers, following);
+        }
+
+        private void createSlime(string username, int posts, int followers, int following)
+        {
+            InstagramSlime slime = instagramSlimeGenerator.generate(username, followers, following, posts, speciesSettings.spawnMargin);
+            
+            slimeQueue.Enqueue(slime);
         }
         
         private async Task<string> getResponse(string url)

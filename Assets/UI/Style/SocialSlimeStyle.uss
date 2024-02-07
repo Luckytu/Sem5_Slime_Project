@@ -1,2 +1,43 @@
 .InputContainer {
+    align-items: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.TitleText {
+    font-size: 34px;
+}
+
+.SlimesContainer {
+    flex-direction: row;
+}
+
+.Slime {
+    margin-top: 12px;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    padding-top: 6px;
+    padding-right: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    flex-basis: 0;
+    flex-grow: 0;
+}
+
+.QueueContainer {
+    align-self: center;
+    flex-grow: 1;
+}
+
+.QueueText {
+    -unity-text-align: upper-center;
 }
