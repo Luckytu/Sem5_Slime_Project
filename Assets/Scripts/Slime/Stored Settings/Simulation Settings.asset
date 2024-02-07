@@ -16,6 +16,7 @@ MonoBehaviour:
   graphicsFormat: 48
   maxEntityAmount: 1000000
   maxSpeciesAmount: 8
+  currentSpeciesAmount: 4
   spawnMargin: 0.1
   spawnRadius: 35.8
   decayRate: 0.23

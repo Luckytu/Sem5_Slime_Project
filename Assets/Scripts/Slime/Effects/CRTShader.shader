@@ -10,8 +10,8 @@ Shader "Slime/CRTShader"
         distortMultiplier("Distort Multiplier", Float) = 1.0
         speed("speed", Float) = 1.0
         
-        darkMultiplier("Darken", Float) = 1.0
-        scanLineWidth("Scan Line Width", Float) = 1.0
+        brightness("Brightness", Float) = 1.0
+        scanLineAmount("Scan Line Amount", Float) = 100.0
         scanLineSharpness("Scan Line Sharpness", Float) = 1.0
     }
 
@@ -60,6 +60,10 @@ Shader "Slime/CRTShader"
 
                 float distortMultiplier;
                 float speed;
+
+                float brightness;
+                float scanLineAmount;
+                float scanLineSharpness;
             CBUFFER_END
 
             Varyings vert(Attributes IN)
@@ -78,11 +82,11 @@ Shader "Slime/CRTShader"
                 noiseUV.y = (noiseUV.y + _Time * speed) % 1.0;
 
                 half4 noiseColor = SAMPLE_TEXTURE2D(NoiseMap, sampler_NoiseMap, noiseUV);
-                half distortAmount = noiseColor.a * (noiseColor.r - 0.5) * 2 * distortMultiplier * 0.01;
+                const half distortAmount = noiseColor.a * (noiseColor.r - 0.5) * 2 * distortMultiplier * 0.01;
 
                 float2 colorUV = IN.uv;
-                
-                half colorMultiplier = sin(colorUV.y + _Time * speed * 100);
+
+                const half colorMultiplier = clamp((sin(colorUV.y * scanLineAmount + _Time * speed * scanLineAmount) + 1) * 0.5 * scanLineSharpness, 0, 1) + brightness;
 
                 colorUV.x = colorUV.x + distortAmount;
                 half4 color = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, colorUV) * colorMultiplier;

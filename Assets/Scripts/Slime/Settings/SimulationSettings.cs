@@ -20,18 +20,23 @@ namespace Slime.Settings
         [NonSerialized] public RenderTexture diffusedTrailMap;
         
         [NonSerialized] public RenderTexture displayMap;
+        [NonSerialized] public RenderTexture effectsMap;
         [NonSerialized] public RenderTexture debugMap;
         
         [NonSerialized] public ComputeBuffer agentBuffer;
         [NonSerialized] public ComputeBuffer speciesBuffer;
         
+        [Header("Generation Settings")]
         public int maxEntityAmount = 1000000;
         public int maxSpeciesAmount = 8;
+        public int minSpeciesAmount = 4;
         public int currentSpeciesAmount;
         
-        public float spawnMargin = 0.1f;
+        [Header("Visual Settings")]
         public float spawnRadius = 0.02f;
+        public Color foodColor;
         
+        [Header("SimulationSettings")]
         public float decayRate;
         public float diffuseRatio;
         public float agentContributionRatio;
@@ -42,10 +47,8 @@ namespace Slime.Settings
         public int sampleEntitiesAmount = 100;
         public float minSpawnPointDistance = 200;
         public float spawnPointMoveMultiplier = 0.05f;
-
-        public Color foodColor;
         
-        //Randomness of the Simulation
+        [Header("Randomness Settings")]
         public float randomVariance;
         public float deathCutoff;
 
@@ -58,6 +61,7 @@ namespace Slime.Settings
             GraphicsUtility.createRenderTexture(ref diffusedTrailMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
             
             GraphicsUtility.createRenderTexture(ref displayMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
+            GraphicsUtility.createRenderTexture(ref effectsMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
             GraphicsUtility.createRenderTexture(ref debugMap, GameSettings.width, GameSettings.height, filterMode, graphicsFormat);
         }
         

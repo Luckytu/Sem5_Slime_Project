@@ -12,26 +12,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089c680d48974a6c9bca7069d799c8ad, type: 3}
   m_Name: Other Species Settings
   m_EditorClassIdentifier: 
+  spawnMargin: 0.1
   species:
-  - color: {r: 0.09803921, g: 0.22322848, b: 1, a: 1}
-    spawnPosition: {x: 465.06683, y: 665.6551}
-    entities: 2000
+  - color: {r: 0.24313726, g: 0.41568628, b: 0.7882353, a: 1}
+    spawnPosition: {x: 697.70325, y: 517.65137}
+    population: 125000
     offset: 0
-    availableSpawns: 0
+    alivePopulation: 125000
     hungerAccumulation: 1.25
     interSpeciesHungerModifier: 0
-    moveSpeed: 32
-    turnSpeed: 9.6
+    moveSpeed: 16
+    turnSpeed: 4.8
     sensorAngle: 0.33
     sensorOffset: 7.5
-  - color: {r: 1, g: 0.09803921, b: 0.18518287, a: 1}
-    spawnPosition: {x: 465.06683, y: 665.6551}
-    entities: 2000
-    offset: 2000
-    availableSpawns: 0
+  - color: {r: 0.43529412, g: 0.27450982, b: 0.7921569, a: 1}
+    spawnPosition: {x: 2622.8145, y: 1687.0144}
+    population: 125000
+    offset: 125000
+    alivePopulation: 125000
     hungerAccumulation: 1.25
     interSpeciesHungerModifier: 0
-    moveSpeed: 32
-    turnSpeed: 9.6
+    moveSpeed: 16
+    turnSpeed: 4.8
+    sensorAngle: 0.33
+    sensorOffset: 7.5
+  - color: {r: 0.5764706, g: 0.20784314, b: 0.7764706, a: 1}
+    spawnPosition: {x: 1769.0161, y: 1148.6794}
+    population: 125000
+    offset: 250000
+    alivePopulation: 125000
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 16
+    turnSpeed: 4.8
+    sensorAngle: 0.33
+    sensorOffset: 7.5
+  - color: {r: 0.7294118, g: 0.20784314, b: 0.65882355, a: 1}
+    spawnPosition: {x: 1349.2257, y: 1894.0087}
+    population: 125000
+    offset: 375000
+    alivePopulation: 125000
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 16
+    turnSpeed: 4.8
+    sensorAngle: 0.33
+    sensorOffset: 7.5
+  - color: {r: 0.9098039, g: 0.28235295, b: 0.42352942, a: 1}
+    spawnPosition: {x: 501.20764, y: 1301.0732}
+    population: 125000
+    offset: 500000
+    alivePopulation: 125000
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 16
+    turnSpeed: 4.8
+    sensorAngle: 0.33
+    sensorOffset: 7.5
+  - color: {r: 1, g: 0.33333334, b: 0.24313726, a: 1}
+    spawnPosition: {x: 3329.0205, y: 1794.9702}
+    population: 125000
+    offset: 625000
+    alivePopulation: 125000
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 16
+    turnSpeed: 4.8
+    sensorAngle: 0.33
+    sensorOffset: 7.5
+  - color: {r: 1, g: 0.6509804, b: 0.29803923, a: 1}
+    spawnPosition: {x: 2584.5908, y: 965.46106}
+    population: 125000
+    offset: 750000
+    alivePopulation: 125000
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 16
+    turnSpeed: 4.8
+    sensorAngle: 0.33
+    sensorOffset: 7.5
+  - color: {r: 1, g: 0.85490197, b: 0.33333334, a: 1}
+    spawnPosition: {x: 1669.2922, y: 1434.1294}
+    population: 125000
+    offset: 875000
+    alivePopulation: 125000
+    hungerAccumulation: 1.25
+    interSpeciesHungerModifier: 0
+    moveSpeed: 16
+    turnSpeed: 4.8
     sensorAngle: 0.33
     sensorOffset: 7.5

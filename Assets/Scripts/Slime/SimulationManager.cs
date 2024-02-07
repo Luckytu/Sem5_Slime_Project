@@ -1,6 +1,7 @@
 using System;
 using Camera_Capture;
 using Global;
+using Slime.Effects;
 using Slime.Settings;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -14,23 +15,12 @@ namespace Slime
         [Header("Graphics Settings")] [SerializeField]
         private bool showDebugMaps = false;
         
-        [SerializeField] private SpeciesSettings speciesSettings;
+        [SerializeField] private SlimeEffects slimeEffects;
         
         [SerializeField] private CameraCapture cameraCapture;
 
         [SerializeField] private Transform canvas;
         [SerializeField] private Transform debugCanvas;
-        
-        private bool _scanFoodMap = false;
-        public bool scanFoodMap
-        {
-            get => _scanFoodMap;
-            set
-            {
-                _scanFoodMap = value;
-                simulationShader.SetBool("scanFoodMap", scanFoodMap);
-            }
-        }
         
         private static readonly int CameraCaptureMap = Shader.PropertyToID("cameraCaptureMap");
         
@@ -40,7 +30,7 @@ namespace Slime
             simulationSettings.cameraCaptureMap = cameraCapture.resultMap;
             simulationShader.SetTexture(diffuseKernel, CameraCaptureMap, simulationSettings.cameraCaptureMap);
             
-            canvas.GetComponent<MeshRenderer>().material.mainTexture = simulationSettings.displayMap;
+            canvas.GetComponent<MeshRenderer>().material.mainTexture = simulationSettings.effectsMap;
             debugCanvas.GetComponent<MeshRenderer>().material.mainTexture = simulationSettings.diffusedFoodMap;
         }
 
@@ -54,6 +44,8 @@ namespace Slime
             setOnUpdate();
             run();
             debug();
+            
+            slimeEffects.applyEffects();
         }
 
         private void debug()

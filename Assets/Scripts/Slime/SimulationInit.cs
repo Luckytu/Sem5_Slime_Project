@@ -43,17 +43,23 @@ namespace Slime
 
         private void Awake()
         {
+            Debug.Log("start: " + Time.realtimeSinceStartup);
+            
             simulationSettings.generateTextureMaps();
             
             if (useDefaultSpeciesSettings)
             {
                 speciesSettings = defaultSpeciesSettings;
             }
+            
+            startSimulation();
+            Debug.Log("done: " + Time.realtimeSinceStartup);
+            
         }
 
         private void Start()
         {
-            startSimulation();
+            onSimulationStart.Invoke();
         }
 
         public void startSimulation()
@@ -68,7 +74,7 @@ namespace Slime
             setShaderParameters();
             
             GameState.state = GameState.Simulation;
-            onSimulationStart.Invoke();
+            
         }
 
         private void setupSpecies()
@@ -77,7 +83,7 @@ namespace Slime
             {
                 for (int i = 0; i < species.Length; i++)
                 {
-                    speciesSettings.randomizeSpawnPosition(i, simulationSettings.spawnMargin);
+                    speciesSettings.randomizeSpawnPosition(i);
                 }
             }
 
@@ -102,9 +108,20 @@ namespace Slime
                                    spawnPositions,
                                    simulationSettings.spawnRadius);
             
-            GraphicsUtility.setupShaderBuffer<EntitySettings.Entity>(ref simulationSettings.agentBuffer, simulationShader, entities.entities, updateKernel, "agents");
+            GraphicsUtility.setupShaderBuffer<Entity>(ref simulationSettings.agentBuffer, simulationShader, entities.entities, updateKernel, "agents");
+        }
+
+        private void awakeShader()
+        {
+            
+        }
+
+        private void startShader()
+        {
+            
         }
         
+        //TODO: split into startShader and awakeShader
         private void setShaderParameters()
         {
             simulationShader.SetTexture(updateKernel, FoodMap, simulationSettings.preFoodMap);

@@ -94,7 +94,7 @@ namespace Camera_Capture
         private void setOnUpdate()
         {
             Matrix3x3 A = projectiveMapping.getTransformationMatrix
-            (settings.p.x1, settings.p.y1, 
+               (settings.p.x1, settings.p.y1, 
                 settings.p.x2, settings.p.y2, 
                 settings.p.x3, settings.p.y3, 
                 settings.p.x4, settings.p.y4);

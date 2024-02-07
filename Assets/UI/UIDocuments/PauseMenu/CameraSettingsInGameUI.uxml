@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Style/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=48b06a5911ee8684487e47e8f3aeb238&amp;type=3#GlobalStyle" />
     <Style src="project://database/Assets/UI/Style/CameraSettingsInGameUIStyle.uss?fileID=7433441132597879392&amp;guid=800a9f3099b44834c9d724040a15beee&amp;type=3#CameraSettingsInGameUIStyle" />
-    <ui:VisualElement name="CameraSettingsContainer" class="UIContainer BaseText" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+    <ui:VisualElement name="CameraSettingsContainer" class="UIContainer BaseText" style="flex-grow: 1;">
         <ui:VisualElement name="p1" class="ValuePairContainer">
             <ui:Label tabindex="-1" text="(0.00, 0.00)" display-tooltip-when-elided="true" name="p1Label" class="ValuePairLabel" />
             <ui:Slider label="x1" value="0" high-value="1" direction="Horizontal" name="x1" page-size="1" />

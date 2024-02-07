@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,7 +9,7 @@ namespace GameFlow
     {
         [SerializeField] private Interval first;
         [SerializeField] private bool startImmediately;
-        private Interval current;
+        private Interval active;
 
         private void Start()
         {
@@ -20,28 +21,28 @@ namespace GameFlow
 
         public void startTimeLine()
         {
-            current = first;
+            setActive(first);
             first.startInterval();
         }
 
-        public void setCurrent(Interval interval)
+        public void setActive(Interval interval)
         {
-            current = interval;
+            active = interval;
         }
-
-        public void skipCurrent()
+        
+        public void skipActives()
         {
-            current.finish();
+            active.finish();
         }
         
         public void pause()
         {
-            current.pause();
+            active.pause();
         }
 
         public void resume()
         {
-            current.resume();
+            active.resume();
         }
     }
 }

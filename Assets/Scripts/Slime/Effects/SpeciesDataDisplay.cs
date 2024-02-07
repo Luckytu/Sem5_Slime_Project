@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Global;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
@@ -40,7 +41,7 @@ namespace Slime.Effects
 
         private void Update()
         {
-            if (species == null)
+            if (species == null || GameState.state != GameState.Simulation)
             {
                 return;
             }
@@ -48,7 +49,7 @@ namespace Slime.Effects
             for(int i = 0; i < species.Length; i++)
             {
                 float xCoord = species[i].spawnPosition.x;
-                float yCoord = 1080 - species[i].spawnPosition.y;
+                float yCoord = GameSettings.height - species[i].spawnPosition.y;
                 
                 string x = xCoord.ToString("N2");
                 string y = yCoord.ToString("N2");
@@ -72,15 +73,14 @@ namespace Slime.Effects
             }
         }
 
-        public void instantiateDataDisplays(Species[] newSpecies)
+        public void instantiateDataDisplays(int speciesAmount)
         {
-            species = newSpecies;
-            dataDisplays = new TemplateContainer[newSpecies.Length];
-            labelElements = new LabelElements[newSpecies.Length];
+            species = new Species[speciesAmount];
+            dataDisplays = new TemplateContainer[speciesAmount];
+            labelElements = new LabelElements[speciesAmount];
             
-            for(int i = 0; i < newSpecies.Length; i++)
+            for(int i = 0; i < speciesAmount; i++)
             {
-                
                 dataDisplays[i] = dataDisplaySource.Instantiate();
 
                 labelElements[i] = new LabelElements()
@@ -96,12 +96,13 @@ namespace Slime.Effects
                     sensorAngleOffset  = dataDisplays[i].Q("SensorAngleOffset")  as Label
                 };
                 
-                
-                
-                
-                
                 root.Add(dataDisplays[i]);
             }
+        }
+
+        public void toggleVisible()
+        {
+            root.visible = !root.visible;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Slime.Settings
 
         public float populationDeathCutoffRatio = 0.05f;
         public float minimumLifeTime = 120f;
+        public float maximumLifeTime = 1200f;
         
         public float minHungerAccumulation, maxHungerAccumulation;
         public float minInterSpeciesHungerModifier, maxInterSpeciesHungerModifier;

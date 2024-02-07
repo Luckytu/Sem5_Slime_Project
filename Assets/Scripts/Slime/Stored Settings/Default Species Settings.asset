@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089c680d48974a6c9bca7069d799c8ad, type: 3}
   m_Name: Default Species Settings
   m_EditorClassIdentifier: 
+  spawnMargin: 0.1
   species:
   - color: {r: 1, g: 0.63579774, b: 0.09803921, a: 1}
     spawnPosition: {x: 794.7974, y: 404.4241}

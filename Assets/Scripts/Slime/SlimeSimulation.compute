@@ -17,12 +17,11 @@ int sampleEntitiesAmount;
 float minSpawnPointDistance;
 float spawnPointMoveMultiplier;
 
-bool scanFoodMap;
 float4 foodColor;
 
 struct Agent
 {
-    int speciesIndex;
+    uint speciesIndex;
     
     float2 position;
     float angle;
@@ -186,7 +185,7 @@ float2 respawn(Agent agent, Species agentSpecies, float random, int id)
     float2 spawnMoveVector = (averageSpeciesPosition - species[agent.speciesIndex].spawnPosition) * spawnPointMoveMultiplier;
 
     float2 otherSpawnPointsVector;
-    for(int k = 0; k < speciesAmount; k++)
+    for(uint k = 0; k < speciesAmount; k++)
     {
         if(k == agent.speciesIndex)
         {
@@ -410,17 +409,8 @@ void display(uint3 id : SV_DispatchThreadID)
 
     color = color.a * color + (1 - color.a) * float4(0,0,0,1);
     */
-    
-    if(scanFoodMap)
-    {
-        color = diffusedFoodMap[id.xy] * foodColor + (1 - color) * (1 - foodAlpha);
-    }
-    else
-    {
-        color = diffusedFoodMap[id.xy] * foodColor + color * (1 - foodAlpha); 
-    }
 
-    displayMap[id.xy] = color;
+    displayMap[id.xy] = diffusedFoodMap[id.xy] * foodColor + color * (1 - foodAlpha); 
 
     //DEBUG
     /*

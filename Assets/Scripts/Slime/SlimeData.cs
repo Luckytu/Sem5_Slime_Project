@@ -21,4 +21,15 @@ namespace Slime
         public float sensorAngle;
         public float sensorOffset;
     }
+    
+    public struct Entity
+    {
+        public int speciesIndex;
+
+        public Vector2 position;
+        public float angle;
+
+        public float hunger;
+        public int foodPheromoneStorage;
+    }
 }

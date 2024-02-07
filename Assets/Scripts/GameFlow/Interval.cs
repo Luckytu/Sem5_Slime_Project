@@ -3,6 +3,7 @@ using System.Collections;
 using Global;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace GameFlow
 {
@@ -12,8 +13,11 @@ namespace GameFlow
         
         [SerializeField] protected float duration;
         public float remaining;
+
+        [SerializeField] protected float randomVariance;
         
         [SerializeField] protected Interval next;
+        [SerializeField] protected bool loopThis;
         protected bool paused;
 
         [SerializeField] protected UnityEvent onStart;
@@ -36,10 +40,10 @@ namespace GameFlow
         {
             if (timeline != null)
             {
-                timeline.setCurrent(this);
+                timeline.setActive(this);
             }
             
-            remaining = duration;
+            remaining = duration + Random.Range(-randomVariance, randomVariance);
             onStart.Invoke();
             StartCoroutine(interval());
         }
@@ -54,6 +58,13 @@ namespace GameFlow
             }
             
             onFinished.Invoke();
+
+            if (loopThis)
+            {
+                startInterval();
+                yield break;
+            }
+
             if (next != null)
             {
                 next.startInterval();

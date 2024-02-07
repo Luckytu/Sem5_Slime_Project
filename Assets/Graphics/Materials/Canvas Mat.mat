@@ -110,11 +110,14 @@ Material:
     - _Surface: 0
     - _UVSec: 0
     - _ZWrite: 1
-    - darkMultiplier: 1
-    - distortMultiplier: 0.95
-    - scanLineSharpness: 1
+    - brightness: 0.79
+    - brightnessMultiplier: 1
+    - darkMultiplier: 0
+    - distortMultiplier: 0.17
+    - scanLineAmount: 700
+    - scanLineSharpness: 0.3
     - scanLineWidth: 1
-    - speed: 1
+    - speed: 1.42
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
