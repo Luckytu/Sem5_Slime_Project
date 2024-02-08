@@ -75,6 +75,8 @@ namespace Slime.Effects
 
         public void instantiateDataDisplays(int speciesAmount)
         {
+            root.Clear();
+            
             species = new Species[speciesAmount];
             dataDisplays = new TemplateContainer[speciesAmount];
             labelElements = new LabelElements[speciesAmount];

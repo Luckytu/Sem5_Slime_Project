@@ -4,6 +4,7 @@ namespace InstagramGeneration
 {
     public class InstagramSlime
     {
+        public bool useFakeData { get; set; }
         public string userName { get; set; }
         public int follower { get; set; }
         public int following { get; set; }
@@ -13,6 +14,7 @@ namespace InstagramGeneration
 
         public InstagramSlime(string userName, int follower, int following, int posts, Species species)
         {
+            useFakeData = false;
             this.userName = userName;
             this.follower = follower;
             this.following = following;

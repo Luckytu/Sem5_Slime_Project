@@ -9,6 +9,7 @@ namespace Slime.Settings
         public float spawnMargin;
         
         public Species[] species;
+        //public Species[] newSpecies;
 
         public void randomizeSpawnPosition(int speciesIndex)
         {

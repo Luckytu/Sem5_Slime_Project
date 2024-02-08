@@ -30,7 +30,6 @@ namespace Slime.Settings
         public int maxEntityAmount = 1000000;
         public int maxSpeciesAmount = 8;
         public int minSpeciesAmount = 4;
-        public int currentSpeciesAmount;
         
         [Header("Visual Settings")]
         public float spawnRadius = 0.02f;

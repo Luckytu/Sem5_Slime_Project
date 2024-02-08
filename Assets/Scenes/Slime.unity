@@ -119,6 +119,220 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &183626499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 183626500}
+  - component: {fileID: 183626501}
+  m_Layer: 0
+  m_Name: Reverse
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &183626500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183626499}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1983205620}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &183626501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183626499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e47362ab820468b950f56ff64a46fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 0}
+  duration: 0.02
+  remaining: 0
+  randomVariance: 0
+  next: {fileID: 1993077608}
+  loopThis: 0
+  paused: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolateDistortion
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onUpdate:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolateDistortion
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  interpolators:
+  - {fileID: 11400000, guid: 229a55560a32d33429f886c3ceffca38, type: 2}
+--- !u!1 &279590784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 279590787}
+  - component: {fileID: 279590786}
+  - component: {fileID: 279590785}
+  m_Layer: 0
+  m_Name: InstagramCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &279590785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279590784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
+--- !u!20 &279590786
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279590784}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 4.5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 1
+  m_TargetEye: 0
+  m_HDR: 1
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 0
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &279590787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279590784}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &341094662
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,12 +580,15 @@ MonoBehaviour:
   simulationShader: {fileID: 7200000, guid: 9d321db15b3e5eb4fad520bc3845f115, type: 3}
   simulationSettings: {fileID: 11400000, guid: 017ab43df5b928942bc59fbdb5112885, type: 2}
   effectsShader: {fileID: 7200000, guid: d65c5f9966ef7cb4f842356448713275, type: 3}
+  speciesSettings: {fileID: 11400000, guid: 821d15ad874d8ec4e9c0d4ee2e6daef5, type: 2}
   effectsSettings: {fileID: 11400000, guid: e00a72267cb595c4284483abc163947c, type: 2}
   speciesDataDisplay: {fileID: 982726847}
   entityDataDisplay: {fileID: 1670970255}
+  canvasRenderer: {fileID: 1172672818}
   entityReadAmount: 8
   pixelSize: 20
   whiteNoiseAmount: 0.1
+  pixelatedAreas: []
 --- !u!1 &402208930
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,8 +620,126 @@ Transform:
   m_Children:
   - {fileID: 1040349279}
   - {fileID: 951770981}
+  - {fileID: 2027647612}
+  - {fileID: 1364231522}
+  - {fileID: 1983205620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &508679679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 508679682}
+  - component: {fileID: 508679683}
+  - component: {fileID: 508679681}
+  - component: {fileID: 508679680}
+  m_Layer: 0
+  m_Name: Slime Graph
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &508679680
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508679679}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9aa8f623d6b2bd846a14ee7c6436f0a8, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &508679681
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508679679}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &508679682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508679679}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 40, y: 0, z: 0}
+  m_LocalScale: {x: 16, y: 9, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &508679683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508679679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ea507334f744ae9ae7ebaf762c989f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speciesSettings: {fileID: 11400000, guid: 821d15ad874d8ec4e9c0d4ee2e6daef5, type: 2}
+  uiDocument: {fileID: 1493212929}
+  graphShader: {fileID: 7200000, guid: 9de0aa4a451e3334caae7e2114834822, type: 3}
+  graphTextures:
+  - {fileID: 8400000, guid: c3f42107fc7dad645a4eeb4108d8642e, type: 2}
+  - {fileID: 8400000, guid: 151feee4a2989694fa52e0f930d66d93, type: 2}
+  - {fileID: 8400000, guid: 37505d68a180fee40a4506eb3e920516, type: 2}
+  - {fileID: 8400000, guid: 282ac37487cdf7540b799f4729da6e0e, type: 2}
+  - {fileID: 8400000, guid: 1f9bdbacd393ea04cabcb0a5a7e1a3a0, type: 2}
+  - {fileID: 8400000, guid: 390a96ef546a9c042a0273153a4ac3ca, type: 2}
+  - {fileID: 8400000, guid: 0fb0c07d0302536458aef207d972fa27, type: 2}
+  - {fileID: 8400000, guid: 8707deeb5e183f446aed62b60de64cfe, type: 2}
+  textureAmount: 8
+  width: 880
+  height: 200
+  verticalLimit: 6000
+  renderer: {fileID: 508679680}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +753,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -643,6 +979,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c7725531b044e6a2241043e647ec84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &798142504
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,8 +1002,6 @@ GameObject:
   - component: {fileID: 798142506}
   - component: {fileID: 798142505}
   - component: {fileID: 798142508}
-  - component: {fileID: 798142507}
-  - component: {fileID: 798142509}
   m_Layer: 0
   m_Name: InstagramGenerator
   m_TagString: Untagged
@@ -680,10 +1026,21 @@ MonoBehaviour:
   speciesSettings: {fileID: 11400000, guid: 821d15ad874d8ec4e9c0d4ee2e6daef5, type: 2}
   instagramSlimeGenerator: {fileID: 798142508}
   simulationInit: {fileID: 392849027}
-  loadingTimeline: {fileID: 798142507}
   onUpdateQueueSlots:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2117879039}
+        m_TargetAssemblyTypeName: InstagramGeneration.InstagramUI, Assembly-CSharp
+        m_MethodName: updateQueue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onUpdateAlive:
     m_PersistentCalls:
       m_Calls:
@@ -702,6 +1059,21 @@ MonoBehaviour:
   onUpdateArchived:
     m_PersistentCalls:
       m_Calls: []
+  onUpdateColor:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2044239093}
+        m_TargetAssemblyTypeName: Arduino.LEDCommunicator, Assembly-CSharp
+        m_MethodName: addColorToQueue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   openQueueSlots: 3
   coolDown: 27
   coolDownVariance: 13
@@ -720,20 +1092,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &798142507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798142504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37381d9a7073499997fe5694644b1cd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  first: {fileID: 798142509}
-  startImmediately: 0
 --- !u!114 &798142508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,42 +1114,6 @@ MonoBehaviour:
   maxFollowers: 1500
   maxFollowing: 1500
   maxPosts: 500
---- !u!114 &798142509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798142504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8432884b4f8947598bd560d9163679f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeline: {fileID: 0}
-  duration: 2
-  remaining: 0
-  randomVariance: 0
-  next: {fileID: 0}
-  loopThis: 0
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onFinished:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 798142505}
-        m_TargetAssemblyTypeName: InstagramGeneration.InstagramSlimeManager, Assembly-CSharp
-        m_MethodName: resetSimulation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &852685245
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,8 +1156,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d3138f45ac6052b4c97c64226b992b1a, type: 3}
-  m_Resource: {fileID: 8300000, guid: d3138f45ac6052b4c97c64226b992b1a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f756f1e8ce020a44a8fdbe1dde1f6d2e, type: 3}
+  m_Resource: {fileID: 8300000, guid: f756f1e8ce020a44a8fdbe1dde1f6d2e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -921,6 +1243,80 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &911735253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 911735254}
+  - component: {fileID: 911735255}
+  m_Layer: 0
+  m_Name: Distort
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &911735254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911735253}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1983205620}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &911735255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911735253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e47362ab820468b950f56ff64a46fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 0}
+  duration: 0.88
+  remaining: 0
+  randomVariance: 0.06
+  next: {fileID: 183626501}
+  loopThis: 0
+  paused: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolateDistortion
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  interpolators:
+  - {fileID: 11400000, guid: ac627ad63f92b2c4cba9a9997fb6265c, type: 2}
 --- !u!1 &951770980
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,6 +1372,7 @@ MonoBehaviour:
   randomVariance: 3
   next: {fileID: 0}
   loopThis: 1
+  paused: 0
   onStart:
     m_PersistentCalls:
       m_Calls:
@@ -1020,6 +1417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   first: {fileID: 951770982}
   startImmediately: 1
+  active: {fileID: 0}
 --- !u!114 &951770984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,6 +1436,7 @@ MonoBehaviour:
   randomVariance: 3
   next: {fileID: 0}
   loopThis: 1
+  paused: 0
   onStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1082,6 +1481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   first: {fileID: 951770984}
   startImmediately: 1
+  active: {fileID: 0}
 --- !u!114 &951770986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1100,6 +1500,7 @@ MonoBehaviour:
   randomVariance: 0.5
   next: {fileID: 0}
   loopThis: 1
+  paused: 0
   onStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1144,6 +1545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   first: {fileID: 951770986}
   startImmediately: 1
+  active: {fileID: 0}
 --- !u!1 &982726844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,11 +1770,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeline: {fileID: 1040349280}
-  duration: 0.5
+  duration: 0.32
   remaining: 0
   randomVariance: 0
   next: {fileID: 1709795861}
   loopThis: 0
+  paused: 0
   onStart:
     m_PersistentCalls:
       m_Calls:
@@ -1430,6 +1833,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1040349279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1036006037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1036006038}
+  - component: {fileID: 1036006039}
+  m_Layer: 0
+  m_Name: Duration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1036006038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036006037}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364231522}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1036006039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036006037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8432884b4f8947598bd560d9163679f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 1364231523}
+  duration: 3.18
+  remaining: 0
+  randomVariance: 1.19
+  next: {fileID: 1758794977}
+  loopThis: 0
+  paused: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1040349278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,6 +1940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   first: {fileID: 1197595508}
   startImmediately: 1
+  active: {fileID: 0}
 --- !u!1 &1172672816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1610,17 +2071,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeline: {fileID: 1040349280}
-  duration: 3
+  duration: 10.18
   remaining: 0
-  randomVariance: 0
+  randomVariance: 1.5
   next: {fileID: 1642807262}
   loopThis: 0
+  paused: 0
   onStart:
     m_PersistentCalls:
       m_Calls: []
   onFinished:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1364231521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1364231522}
+  - component: {fileID: 1364231523}
+  m_Layer: 0
+  m_Name: Pixelize
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1364231522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364231521}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1036006038}
+  - {fileID: 1758794976}
+  m_Father: {fileID: 402208932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1364231523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364231521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37381d9a7073499997fe5694644b1cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  first: {fileID: 1036006039}
+  startImmediately: 1
+  active: {fileID: 0}
 --- !u!1 &1439520870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +2159,7 @@ Transform:
   m_GameObject: {fileID: 1439520870}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.82, y: 0, z: -0.59}
+  m_LocalPosition: {x: 20, y: 0, z: 0}
   m_LocalScale: {x: 16, y: 9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1879,6 +2390,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e3febe250330e48a719358c2c2f469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1493212927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1493212928}
+  - component: {fileID: 1493212929}
+  m_Layer: 0
+  m_Name: SlimeGraphScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1493212928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493212927}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1838934853}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1493212929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493212927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 0094887f49c6f8649ab7de7b0c29b3c4, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: db96b966a2fbcd748ae167c6558aa5aa,
+    type: 3}
+  m_SortingOrder: 0
 --- !u!1 &1635336131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,11 +2571,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeline: {fileID: 1040349280}
-  duration: 1.625
+  duration: 3.5
   remaining: 0
   randomVariance: 0
   next: {fileID: 1011128069}
   loopThis: 0
+  paused: 0
   onStart:
     m_PersistentCalls:
       m_Calls:
@@ -2076,6 +2637,18 @@ MonoBehaviour:
       - m_Target: {fileID: 392849028}
         m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
         m_MethodName: interpolateWhiteNoise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolateDistortion
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2434,6 +3007,7 @@ MonoBehaviour:
   randomVariance: 0
   next: {fileID: 1197595508}
   loopThis: 0
+  paused: 0
   onStart:
     m_PersistentCalls:
       m_Calls: []
@@ -2442,6 +3016,116 @@ MonoBehaviour:
       m_Calls: []
   onUpdate: []
   interpolators: []
+--- !u!1 &1758794975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1758794976}
+  - component: {fileID: 1758794977}
+  m_Layer: 0
+  m_Name: Pixelize
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1758794976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758794975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364231522}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1758794977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758794975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e47362ab820468b950f56ff64a46fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 1364231523}
+  duration: 2.61
+  remaining: 1.86
+  randomVariance: 0.58
+  next: {fileID: 1036006039}
+  loopThis: 0
+  paused: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolateWhiteNoise
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolatePixelization
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.4
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolatePixelSize
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onUpdate:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 392849028}
+        m_TargetAssemblyTypeName: Slime.Effects.SlimeEffects, Assembly-CSharp
+        m_MethodName: interpolatePixelSize
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  interpolators:
+  - {fileID: 11400000, guid: ac627ad63f92b2c4cba9a9997fb6265c, type: 2}
 --- !u!1 &1838934852
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,6 +3162,7 @@ Transform:
   - {fileID: 1635336132}
   - {fileID: 1680100281}
   - {fileID: 2117879037}
+  - {fileID: 1493212928}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1838934854
@@ -2624,6 +3309,113 @@ MonoBehaviour:
   CameraSettingsInGameUI: {fileID: 2126102049}
   PauseMenuUI: {fileID: 2009281404}
   cameraCapture: {fileID: 341094667}
+--- !u!1 &1983205619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983205620}
+  - component: {fileID: 1983205621}
+  m_Layer: 0
+  m_Name: Distort
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1983205620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983205619}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1993077607}
+  - {fileID: 911735254}
+  - {fileID: 183626500}
+  m_Father: {fileID: 402208932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1983205621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983205619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37381d9a7073499997fe5694644b1cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  first: {fileID: 1993077608}
+  startImmediately: 1
+  active: {fileID: 0}
+--- !u!1 &1993077606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1993077607}
+  - component: {fileID: 1993077608}
+  m_Layer: 0
+  m_Name: Duration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1993077607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993077606}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1983205620}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1993077608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993077606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8432884b4f8947598bd560d9163679f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 0}
+  duration: 4.31
+  remaining: 0
+  randomVariance: 1.26
+  next: {fileID: 911735255}
+  loopThis: 0
+  paused: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2009281401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,6 +3485,219 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   cameraSettingsUI: {fileID: 1872507005}
+--- !u!1 &2027647611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2027647612}
+  - component: {fileID: 2027647614}
+  - component: {fileID: 2027647613}
+  m_Layer: 0
+  m_Name: Generate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2027647612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027647611}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 402208932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2027647613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027647611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8432884b4f8947598bd560d9163679f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 2027647614}
+  duration: 30
+  remaining: 0
+  randomVariance: 5
+  next: {fileID: 0}
+  loopThis: 1
+  paused: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 798142505}
+        m_TargetAssemblyTypeName: InstagramGeneration.InstagramSlimeManager, Assembly-CSharp
+        m_MethodName: generate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2027647614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027647611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37381d9a7073499997fe5694644b1cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  first: {fileID: 2027647613}
+  startImmediately: 1
+  active: {fileID: 0}
+--- !u!1 &2037675904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2037675907}
+  - component: {fileID: 2037675906}
+  - component: {fileID: 2037675905}
+  m_Layer: 0
+  m_Name: SlimeGraphCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2037675905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037675904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
+--- !u!20 &2037675906
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037675904}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 4.5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 2
+  m_TargetEye: 0
+  m_HDR: 1
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 0
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &2037675907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037675904}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2044239092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,7 +3714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2044239093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2722,17 +3727,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174b734ff592e5249a5910f3ad4550d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedPortName: COM3
-  _hsvValues: {x: 180, y: 255, z: 255}
+  selectedPortName: COM3
+  hsvValues: {x: 0, y: 0, z: 0}
   length: 120
-  animationDuration: 2
+  animationDuration: 4
   exampleColors:
-  - {r: 0.8962264, g: 0.12259703, b: 0.16123992, a: 0}
-  - {r: 0.10568706, g: 0.47496676, b: 0.8962264, a: 0}
-  - {r: 0.7844185, g: 0.062077243, b: 0.8773585, a: 0}
-  - {r: 0.5169829, g: 0.8784314, b: 0.06274507, a: 0}
-  - {r: 0.8784314, g: 0.51854414, b: 0.06274507, a: 0}
-  - {r: 0.8784314, g: 0.06274507, b: 0.3063469, a: 0}
+  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 1, g: 0, b: 0.624176, a: 0}
+  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 0, g: 0.052033424, b: 1, a: 0}
+  - {r: 0, g: 1, b: 0.1451273, a: 0}
   queueExampleOnStart: 0
   isAnimationPlaying: 0
 --- !u!4 &2044239094
@@ -2813,6 +3818,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiDocument: {fileID: 2117879038}
+  onUsernameEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 798142505}
+        m_TargetAssemblyTypeName: InstagramGeneration.InstagramSlimeManager, Assembly-CSharp
+        m_MethodName: registerProfile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2126102046
 GameObject:
   m_ObjectHideFlags: 0
@@ -2922,15 +3942,20 @@ MonoBehaviour:
         m_CallState: 2
   cameraSettingsUI: {fileID: 1872507005}
   cameraCapture: {fileID: 341094667}
+  cameraCaptureSettings: {fileID: 11400000, guid: b30c5dda84dda154ebb0cefff1a554b4,
+    type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1457802790}
   - {fileID: 519420032}
+  - {fileID: 279590787}
+  - {fileID: 2037675907}
   - {fileID: 2044239094}
   - {fileID: 392849024}
   - {fileID: 341094666}
+  - {fileID: 508679682}
   - {fileID: 1838934853}
   - {fileID: 402208932}
   - {fileID: 798142506}

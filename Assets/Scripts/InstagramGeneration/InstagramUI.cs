@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace InstagramGeneration
@@ -24,15 +25,51 @@ namespace InstagramGeneration
         [SerializeField] private UIDocument uiDocument;
         private VisualElement root;
 
-        private VisualElement queue;
+        private VisualElement queueElement;
+        private Queue<Label> profileQueue;
+        
+        private TextField inputField;
+        private bool userNameEntered = false;
+        [SerializeField] private UnityEvent<string> onUsernameEnter;
 
         private void Awake()
         {
+            profileQueue = new Queue<Label>();
+            
             root = uiDocument.rootVisualElement;
             
             initializeElements();
         }
 
+        private void Start()
+        {
+            inputField = root.Q("EnterInstagram") as TextField;
+            inputField?.RegisterCallback<InputEvent>(checkInputEmpty);
+
+            queueElement = root.Q("Queue");
+        }
+
+        private void Update()
+        {
+            if (userNameEntered && Input.GetKeyDown(KeyCode.Return))
+            {
+                Debug.Log(inputField.value);
+                onUsernameEnter.Invoke(inputField.value);
+
+                Label label = new Label(inputField.value);
+                profileQueue.Enqueue(label);
+                queueElement.Add(label);
+                
+                inputField.value = string.Empty;
+            }
+        }
+
+        private void checkInputEmpty(InputEvent e)
+        {
+            Debug.Log(e.newData);
+            userNameEntered = !string.IsNullOrWhiteSpace(e.newData);
+        }
+        
         private void initializeElements()
         {
             slimeContainers = root.Query("Slime").ToList();
@@ -71,12 +108,25 @@ namespace InstagramGeneration
                 else
                 {
                     slimeLabels[i].username.text        = "EMPTY";
+                    slimeLabels[i].username.style.color = Color.white;
                     slimeLabels[i].posts.text           = "//";
                     slimeLabels[i].followers.text       = "//";
                     slimeLabels[i].following.text       = "//";
                     slimeLabels[i].lifetime.text        = "//";
                     slimeLabels[i].population.text      = "//";
                     slimeLabels[i].alivePopulation.text = "//";
+                }
+            }
+        }
+
+        public void updateQueue(int sign)
+        {
+            if (sign > 0)
+            {
+                if (profileQueue.Count > 0)
+                {
+                    Label label = profileQueue.Dequeue();
+                    queueElement.Remove(label);
                 }
             }
         }

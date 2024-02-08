@@ -29,7 +29,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -114,7 +114,7 @@ Material:
     - brightnessMultiplier: 1
     - darkMultiplier: 0
     - distortMultiplier: 0.17
-    - scanLineAmount: 700
+    - scanLineAmount: 900
     - scanLineSharpness: 0.3
     - scanLineWidth: 1
     - speed: 1.42

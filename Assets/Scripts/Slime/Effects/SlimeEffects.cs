@@ -10,13 +10,14 @@ namespace Slime.Effects
     public class SlimeEffects : Simulation
     {
         [SerializeField] private ComputeShader effectsShader;
+        [SerializeField] private SpeciesSettings speciesSettings;
         [SerializeField] private EffectsSettings effectsSettings;
         [SerializeField] private SpeciesDataDisplay speciesDataDisplay;
         [SerializeField] private EntityDataDisplay entityDataDisplay;
+        [SerializeField] private Renderer canvasRenderer;
         [SerializeField] private int entityReadAmount;
         private int entityReadOffset = 0;
-
-        [Header("Shader Effects Settings")] 
+ 
         [SerializeField] private float pixelSize = 1.0f;
 
         [SerializeField] private float whiteNoiseAmount = 0.1f;
@@ -37,6 +38,7 @@ namespace Slime.Effects
         
         private const int effectsKernel = 0;
         
+        [System.Serializable]
         public struct PixelatedArea
         {
             public int bottom;
@@ -45,7 +47,7 @@ namespace Slime.Effects
             public int top;
             public int right;
         }
-        private PixelatedArea[] pixelatedAreas;
+        [SerializeField] private PixelatedArea[] pixelatedAreas;
         private ComputeBuffer pixelatedAreasBuffer;
         
         private void Start()
@@ -85,7 +87,13 @@ namespace Slime.Effects
         {
             if (species != null)
             {
-                simulationSettings.speciesBuffer.GetData(species, 0, 0, simulationSettings.currentSpeciesAmount);
+                if (species.Length != speciesSettings.species.Length)
+                {
+                    species = new Species[speciesSettings.species.Length];
+                }
+                
+                simulationSettings.speciesBuffer.GetData(species, 0, 0, speciesSettings.species.Length);
+                speciesSettings.species = species;
             }
             
             effectsShader.SetFloat("time", Time.fixedTime);
@@ -94,16 +102,16 @@ namespace Slime.Effects
 
         private void readEntities()
         {
-            int range = entityReadAmount / simulationSettings.currentSpeciesAmount;
+            int range = entityReadAmount / speciesSettings.species.Length;
 
-            for (int i = 0; i < simulationSettings.currentSpeciesAmount; i++)
+            for (int i = 0; i < speciesSettings.species.Length; i++)
             {
-                int remainder = entityReadAmount % simulationSettings.currentSpeciesAmount;
+                int remainder = entityReadAmount % speciesSettings.species.Length;
                 
                 //if on the last loop, add the remainder
-                int correctedRange = i == simulationSettings.currentSpeciesAmount - 1 ? range + remainder : range;
+                int correctedRange = i == speciesSettings.species.Length - 1 ? range + remainder : range;
                 
-                int bufferStart = (((simulationSettings.maxEntityAmount / simulationSettings.currentSpeciesAmount) * i) + entityReadOffset) % simulationSettings.maxEntityAmount; 
+                int bufferStart = (((simulationSettings.maxEntityAmount / speciesSettings.species.Length) * i) + entityReadOffset) % simulationSettings.maxEntityAmount; 
                 simulationSettings.agentBuffer.GetData(entities, i * range, bufferStart, correctedRange);
             }
         }
@@ -115,9 +123,9 @@ namespace Slime.Effects
         
         public void initializeSpecies()
         {
-            species = new Species[simulationSettings.currentSpeciesAmount];
+            species = new Species[speciesSettings.species.Length];
             
-            speciesDataDisplay.instantiateDataDisplays(simulationSettings.currentSpeciesAmount);
+            speciesDataDisplay.instantiateDataDisplays(speciesSettings.species.Length);
         }
 
         public void initializeEntities()
@@ -167,16 +175,20 @@ namespace Slime.Effects
                 };
             }
             
+            GraphicsUtility.Release(pixelatedAreasBuffer);
             effectsShader.SetInt("pixelatedAreasAmount", amount);
             GraphicsUtility.setupShaderBuffer(ref pixelatedAreasBuffer, effectsShader, pixelatedAreas, effectsKernel, "pixelatedAreas");
         }
 
         public void resetPixelization()
         {
+            Debug.Log("reset");
+            
             fraction = 0;
             amount = 1;
             
             pixelatedAreas = new PixelatedArea[1];
+            GraphicsUtility.Release(pixelatedAreasBuffer);
             effectsShader.SetInt("pixelatedAreasAmount", 0);
             GraphicsUtility.setupShaderBuffer(ref pixelatedAreasBuffer, effectsShader, pixelatedAreas, effectsKernel, "pixelatedAreas");
         }
@@ -190,10 +202,11 @@ namespace Slime.Effects
         {
             pixelSize = Mathf.Max(1, t * effectsSettings.maxPixelSize);
         }
-        
-        public void interpolateScanLines(float t)
+
+        public void interpolateDistortion(float t)
         {
-            
+            float distort = Mathf.Lerp(effectsSettings.minDistort, effectsSettings.maxDistort, t);
+            canvasRenderer.material.SetFloat("distortMultiplier", distort);
         }
         
         private void OnDestroy()

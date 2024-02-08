@@ -17,5 +17,8 @@ namespace Slime.Settings
         public int minAreaY;
         public int maxAreaY;
         public int growthY;
+
+        public float minDistort = 0.17f;
+        public float maxDistort = 2.5f;
     }
 }

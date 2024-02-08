@@ -51,7 +51,6 @@ namespace Slime_UI
 
         private void quitButtonClick(ClickEvent e)
         {
-            UnityEditor.EditorApplication.isPlaying = false;
             Application.Quit();
         }
 

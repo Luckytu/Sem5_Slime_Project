@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Global;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,7 +10,7 @@ namespace GameFlow
     {
         [SerializeField] private Interval first;
         [SerializeField] private bool startImmediately;
-        private Interval active;
+        [SerializeField] private Interval active;
 
         private void Start()
         {

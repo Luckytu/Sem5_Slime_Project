@@ -13,4 +13,59 @@ MonoBehaviour:
   m_Name: Empty Species Settings
   m_EditorClassIdentifier: 
   spawnMargin: 0.1
-  species: []
+  species:
+  - color: {r: 0, g: 0, b: 0, a: 0}
+    spawnPosition: {x: 0, y: 0}
+    population: 0
+    offset: 0
+    alivePopulation: 0
+    hungerAccumulation: 0
+    interSpeciesHungerModifier: 0
+    moveSpeed: 0
+    turnSpeed: 0
+    sensorAngle: 0
+    sensorOffset: 0
+  - color: {r: 0, g: 0, b: 0, a: 0}
+    spawnPosition: {x: 0, y: 0}
+    population: 0
+    offset: 0
+    alivePopulation: 0
+    hungerAccumulation: 0
+    interSpeciesHungerModifier: 0
+    moveSpeed: 0
+    turnSpeed: 0
+    sensorAngle: 0
+    sensorOffset: 0
+  - color: {r: 0, g: 0, b: 0, a: 0}
+    spawnPosition: {x: 0, y: 0}
+    population: 0
+    offset: 0
+    alivePopulation: 0
+    hungerAccumulation: 0
+    interSpeciesHungerModifier: 0
+    moveSpeed: 0
+    turnSpeed: 0
+    sensorAngle: 0
+    sensorOffset: 0
+  - color: {r: 0, g: 0, b: 0, a: 0}
+    spawnPosition: {x: 0, y: 0}
+    population: 0
+    offset: 0
+    alivePopulation: 0
+    hungerAccumulation: 0
+    interSpeciesHungerModifier: 0
+    moveSpeed: 0
+    turnSpeed: 0
+    sensorAngle: 0
+    sensorOffset: 0
+  - color: {r: 0, g: 0, b: 0, a: 0}
+    spawnPosition: {x: 0, y: 0}
+    population: 0
+    offset: 0
+    alivePopulation: 0
+    hungerAccumulation: 0
+    interSpeciesHungerModifier: 0
+    moveSpeed: 0
+    turnSpeed: 0
+    sensorAngle: 0
+    sensorOffset: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using GameFlow.Interpolators;
+using Global;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +15,12 @@ namespace GameFlow
         {
             while (remaining > 0)
             {
+                if (GameState.state != GameState.Simulation || paused)
+                {
+                    yield return null;
+                    continue;
+                }
+                
                 yield return new WaitWhile(() => paused);
 
                 float t = 1 - Mathf.Clamp01(remaining / duration);

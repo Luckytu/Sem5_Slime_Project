@@ -52,14 +52,14 @@ namespace Slime
                 speciesSettings = defaultSpeciesSettings;
             }
             
-            startSimulation();
+            
             Debug.Log("done: " + Time.realtimeSinceStartup);
             
         }
 
         private void Start()
         {
-            onSimulationStart.Invoke();
+            startSimulation();
         }
 
         public void startSimulation()
@@ -73,8 +73,9 @@ namespace Slime
             setupEntities();
             setShaderParameters();
             
-            GameState.state = GameState.Simulation;
+            onSimulationStart.Invoke();
             
+            GameState.state = GameState.Simulation;
         }
 
         private void setupSpecies()
@@ -86,9 +87,9 @@ namespace Slime
                     speciesSettings.randomizeSpawnPosition(i);
                 }
             }
-
-            simulationSettings.currentSpeciesAmount = species.Length;
-            GraphicsUtility.setupShaderBuffer(ref simulationSettings.speciesBuffer, simulationShader, species, updateKernel, "species");
+            
+            GraphicsUtility.Release(simulationSettings.speciesBuffer);
+            GraphicsUtility.setupShaderBuffer(ref simulationSettings.speciesBuffer, simulationShader, speciesSettings.species, updateKernel, "species");
             simulationShader.SetBuffer(displayKernel, "species", simulationSettings.speciesBuffer);
         }
 
@@ -108,6 +109,7 @@ namespace Slime
                                    spawnPositions,
                                    simulationSettings.spawnRadius);
             
+            GraphicsUtility.Release(simulationSettings.agentBuffer);
             GraphicsUtility.setupShaderBuffer<Entity>(ref simulationSettings.agentBuffer, simulationShader, entities.entities, updateKernel, "agents");
         }
 

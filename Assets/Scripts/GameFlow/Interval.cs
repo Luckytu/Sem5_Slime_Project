@@ -18,7 +18,7 @@ namespace GameFlow
         
         [SerializeField] protected Interval next;
         [SerializeField] protected bool loopThis;
-        protected bool paused;
+        [SerializeField] protected bool paused;
 
         [SerializeField] protected UnityEvent onStart;
         [SerializeField] protected UnityEvent onFinished;
@@ -52,6 +52,12 @@ namespace GameFlow
         {
             while (remaining > 0)
             {
+                if (GameState.state != GameState.Simulation || paused)
+                {
+                    yield return null;
+                    continue;
+                }
+                
                 yield return new WaitWhile(() => paused);
                 remaining -= Time.deltaTime;
                 yield return null;

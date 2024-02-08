@@ -24,11 +24,11 @@ namespace InstagramGeneration
 
         [SerializeField] private InstagramSlimeGenerator instagramSlimeGenerator;
         [SerializeField] private SimulationInit simulationInit;
-        [SerializeField] private Timeline loadingTimeline;
         
         [SerializeField] private UnityEvent<int> onUpdateQueueSlots;
         [SerializeField] private UnityEvent<List<InstagramSlime>> onUpdateAlive;
         [SerializeField] private UnityEvent<List<InstagramSlime>> onUpdateArchived;
+        [SerializeField] private UnityEvent<Color> onUpdateColor;
         [SerializeField] private int openQueueSlots = 4;
 
         [SerializeField] private float coolDown = 14;
@@ -42,6 +42,13 @@ namespace InstagramGeneration
 
         private static HttpClient httpClient = new HttpClient();
         private bool canFetchNewProfile = true;
+
+        private string currentUsername;
+        private int currentPosts;
+        private int currentFollowers;
+        private int currentFollowing;
+        private bool currentFakeData;
+        private bool newSlimeExists = false;
         
         private void Start()
         {
@@ -58,18 +65,43 @@ namespace InstagramGeneration
             slimeQueue.Enqueue(instagramSlimeGenerator.generate("mucha_gue", 38, 49, 0, 0.1f));
             slimeQueue.Enqueue(instagramSlimeGenerator.generate("the_blunicorn", 1164, 1372, 346, 0.1f));
             slimeQueue.Enqueue(instagramSlimeGenerator.generate("laramzp", 854, 659, 32, 0.1f));
-            slimeQueue.Enqueue(instagramSlimeGenerator.generate("einfaltslos", 653, 945, 153, 0.1f));
             generate();
         }
 
         private void Update()
         {
-            foreach (InstagramSlime slime in aliveSlimes)
+            for (int i = 0; i < aliveSlimes.Count; i++)
             {
-                slime.lifeTime += Time.deltaTime;
+                aliveSlimes[i].lifeTime += Time.deltaTime;
+                aliveSlimes[i].species = speciesSettings.species[i];
             }
             
             processProfiles();
+
+            if (newSlimeExists)
+            {
+                Debug.Log("data: ");
+                Debug.Log(currentUsername);
+                Debug.Log(currentPosts);
+                Debug.Log(currentFollowers);
+                Debug.Log(currentFollowing);
+                Debug.Log(currentFakeData);
+                
+                createSlime(currentUsername, currentPosts, currentFollowers, currentFollowing, currentFakeData);
+                
+                newSlimeExists = false;
+            }
+            
+            onUpdateAlive.Invoke(aliveSlimes);
+        }
+        
+        private void createSlime(string username, int posts, int followers, int following, bool useFakeData)
+        {
+            InstagramSlime slime = instagramSlimeGenerator.generate(username, followers, following, posts, speciesSettings.spawnMargin);
+
+            slime.useFakeData = useFakeData;
+            
+            slimeQueue.Enqueue(slime);
         }
         
         public void registerProfile(string username)
@@ -93,27 +125,10 @@ namespace InstagramGeneration
 
         private IEnumerator processCooldown()
         {
-            Debug.Log("processing");
-            
             float randomCooldown = coolDown + Random.Range(-coolDownVariance, coolDownVariance);
             yield return new WaitForSeconds(randomCooldown);
             
-            Debug.Log("can process again");
             canFetchNewProfile = true;
-        }
-        
-        public void resetSimulation()
-        {
-            StartCoroutine(startSimulation());
-        }
-
-        private IEnumerator startSimulation()
-        {
-            simulationSettings.currentSpeciesAmount = aliveSlimes.Count;
-            simulationInit.useDefaultSpeciesSettings = false;
-            simulationInit.speciesSettings = speciesSettings;
-            simulationInit.startSimulation();
-            yield break;
         }
         
         public void generate()
@@ -127,13 +142,12 @@ namespace InstagramGeneration
             //fill up empty slots with slimes from queue
             while (slimeQueue.Count > 0 && aliveSlimes.Count < simulationSettings.maxSpeciesAmount)
             {
-                Debug.Log("queue " + slimeQueue.Count);
-                aliveSlimes.Add(slimeQueue.Dequeue());
+                InstagramSlime addedSlime = slimeQueue.Dequeue();
+                aliveSlimes.Add(addedSlime);
                 openQueueSlots++;
                 onUpdateQueueSlots.Invoke(1);
+                onUpdateColor.Invoke(addedSlime.species.color);
             }
-            
-            Debug.Log("aliveSlimes " + aliveSlimes.Count);
             
             //redistribute and recalculate populations
             int totalPopulation = 0;
@@ -161,13 +175,10 @@ namespace InstagramGeneration
                 previousPopulation += population;
             }
             
-            //gather species for simulation
             speciesSettings.species = aliveSlimes.Select(s => s.species).ToArray();
-            
-            onUpdateAlive.Invoke(aliveSlimes);
-            
-            //call resetSimulation from Timeline
-            loadingTimeline.startTimeLine();
+            simulationInit.useDefaultSpeciesSettings = false;
+            simulationInit.speciesSettings = speciesSettings;
+            simulationInit.startSimulation();
         }
         
         private void killByLifetime()
@@ -185,7 +196,6 @@ namespace InstagramGeneration
                 {
                     archivedSlimes.Add(slime);
                     aliveSlimes.Remove(slime);
-                    simulationSettings.currentSpeciesAmount = aliveSlimes.Count;
                 }
                 
                 if (aliveSlimes.Count <= simulationSettings.minSpeciesAmount)
@@ -197,7 +207,7 @@ namespace InstagramGeneration
 
         private void killByPopulation()
         {
-            if (simulationSettings.currentSpeciesAmount <= simulationSettings.minSpeciesAmount)
+            if (speciesSettings.species.Length <= simulationSettings.minSpeciesAmount)
             {
                 return;
             }
@@ -225,7 +235,8 @@ namespace InstagramGeneration
             
             string username = profileQueue.Dequeue();
             string content = "ERROR";
-            
+
+            bool success = true;
             try
             {
                 //Use this for debugging
@@ -237,9 +248,9 @@ namespace InstagramGeneration
             }
             catch (Exception e)
             {
+                success = false;
                 Debug.Log("error in index");
             }
-            
             
             string followerRegex = "(?<=meta content=\")(.*?)(?= Followers)";
             string followingRegex = "(?<=Followers, )(.*?)(?= Following)";
@@ -260,24 +271,43 @@ namespace InstagramGeneration
             followerMatch = followerMatch.Replace("M", "000000");
             followingMatch = followingMatch.Replace("M", "000000");
             postsMatch = postsMatch.Replace("M", "000000");
+
+            if (string.IsNullOrWhiteSpace(followerMatch) || string.IsNullOrWhiteSpace(followingMatch) ||
+                string.IsNullOrWhiteSpace(postsMatch))
+            {
+                success = false;
+            }
             
             Debug.Log(username);
             Debug.Log("followers = " + followerMatch);
             Debug.Log("following = " + followingMatch);
             Debug.Log("posts = " + postsMatch);
-
-            int followers = Int32.Parse(followerMatch);
-            int following = Int32.Parse(followingMatch);
-            int posts = Int32.Parse(postsMatch);
             
-            createSlime(username, posts, followers, following);
-        }
-
-        private void createSlime(string username, int posts, int followers, int following)
-        {
-            InstagramSlime slime = instagramSlimeGenerator.generate(username, followers, following, posts, speciesSettings.spawnMargin);
+            int followers = 1000;
+            int following = 1000;
+            int posts = 200;
             
-            slimeQueue.Enqueue(slime);
+            if (success)
+            {
+                followers = Int32.Parse(followerMatch);
+                following = Int32.Parse(followingMatch);
+                posts = Int32.Parse(postsMatch);
+            }
+            
+            try
+            {
+                currentUsername = username;
+                currentPosts = posts;
+                currentFollowers = followers;
+                currentFollowing = following;
+                currentFakeData = !success;
+                newSlimeExists = true;
+            }
+            catch (Exception e)
+            {
+                Debug.Log("thread error");
+                Debug.Log(e);
+            }
         }
         
         private async Task<string> getResponse(string url)

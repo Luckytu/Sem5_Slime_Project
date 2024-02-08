@@ -81,6 +81,8 @@ namespace Slime.Effects
 
         public void instantiateDataDisplays(int entitiesAmount)
         {
+            root.Clear();
+            
             entities = new Entity[entitiesAmount];
             dataDisplays = new TemplateContainer[entitiesAmount];
             labelElements = new LabelElements[entitiesAmount];
