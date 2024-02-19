@@ -1,0 +1,44 @@
+int width;
+int height;
+
+int value;
+int verticalLimit;
+
+float4 color;
+
+RWTexture2D<float4> GraphMap;
+
+#pragma kernel graph
+
+[numthreads(8,8,1)]
+void graph (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x < 0 || id.x >= (uint) width || id.y < 0 || id.y >= (uint) height)
+    {
+        return;
+    }
+
+    if (id.x > 0)
+    {
+        int x = id.x - 1;
+        int y = id.y;
+        
+        GraphMap[id.xy] = GraphMap[int2(x,y)];
+    }
+
+    const float vertical = clamp((float)value / (float)verticalLimit, -1, 1);
+    
+    int y = (int)((float)height * (0.5 * vertical + 1) - 0.5 * (float)height);
+
+    if(id.x == 0 && id.y != y)
+    {
+        GraphMap[int2(0,id.y)] = 0;
+    }
+
+    if(id.x == 0 && (id.y == y || id.y == y+1 || id.y == y-1))
+    {
+        GraphMap[int2(0,y)] = color;
+    }
+    
+   
+}

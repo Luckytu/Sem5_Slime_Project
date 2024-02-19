@@ -1,0 +1,18 @@
+.Graph {
+    width: 880px;
+    height: 200px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.GraphContainer {
+    flex-direction: row;
+}
+
+.GraphBox {
+    justify-content: space-between;
+}

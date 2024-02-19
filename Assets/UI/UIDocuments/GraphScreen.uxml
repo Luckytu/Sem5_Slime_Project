@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=48b06a5911ee8684487e47e8f3aeb238&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Assets/UI/Style/GraphStyle.uss?fileID=7433441132597879392&amp;guid=485c37b9924ea24419be6dc3b7f2db46&amp;type=3#GraphStyle" />
+    <ui:VisualElement name="GraphContainer" class="UIContainer GraphContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="GraphBox" class="GraphBox" style="flex-grow: 1;">
+            <ui:Image name="Graph" class="Graph" />
+            <ui:Image name="Graph" class="Graph" />
+            <ui:Image name="Graph" class="Graph" />
+            <ui:Image name="Graph" class="Graph" />
+        </ui:VisualElement>
+        <ui:VisualElement name="GraphBox" class="GraphBox" style="flex-grow: 1;">
+            <ui:Image name="Graph" class="Graph" />
+            <ui:Image name="Graph" class="Graph" />
+            <ui:Image name="Graph" class="Graph" />
+            <ui:Image name="Graph" class="Graph" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
